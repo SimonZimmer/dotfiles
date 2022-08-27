@@ -30,6 +30,9 @@ alias git_rinse="git clean -xfd
 alias l='exa -lbF --git'
 alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
+alias install-dotfiles ="git clone --separate-git-dir=$HOME/dotfiles git@github.com:SimonZimmer/dotfiles.git dotfiles-tmp \
+                        && rsync --recursive --verbose --exclude '.git' dotfiles-tmp/ $HOME/ \
+                        && rm -rf dotfiles-tmp"
 
 #PATH
 export PATH="~/.cargo/bin/:$PATH"
@@ -45,4 +48,5 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
 dotfiles config status.showUntrackedFiles no
-PROMPT='%n~$'
+
+
