@@ -1,11 +1,19 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # OH MY ZSH
 export PATH=/usr/local/bin:$PATH
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
+echo 'POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true' >>! ~/.zshrc
 
 export ZSH=/Users/simonzimmermann/.oh-my-zsh
 # plugins
-plugins=(git macos zsh-syntax-highlighting docker)
+plugins=(git zsh-syntax-highlighting docker)
 source $ZSH/oh-my-zsh.sh
 
 # BASIC
@@ -30,9 +38,6 @@ alias git_rinse="git clean -xfd
 alias l='exa -lbF --git'
 alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
-alias install-dotfiles ="git clone --separate-git-dir=$HOME/dotfiles git@github.com:SimonZimmer/dotfiles.git dotfiles-tmp \
-                        && rsync --recursive --verbose --exclude '.git' dotfiles-tmp/ $HOME/ \
-                        && rm -rf dotfiles-tmp"
 
 #PATH
 export PATH="~/.cargo/bin/:$PATH"
@@ -45,8 +50,27 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
-
 dotfiles config status.showUntrackedFiles no
 
-
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
