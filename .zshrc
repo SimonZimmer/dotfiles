@@ -38,6 +38,7 @@ alias git_rinse="git clean -xfd
 alias l='exa -lbF --git'
 alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
+alias kitdiff="git difftool --no-symlinks --dir-diff"
 
 #PATH
 export PATH="~/.cargo/bin/:$PATH"
@@ -54,3 +55,5 @@ dotfiles config status.showUntrackedFiles no
 
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
