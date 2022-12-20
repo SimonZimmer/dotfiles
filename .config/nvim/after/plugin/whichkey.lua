@@ -20,4 +20,10 @@ wk.register({
       x = { "<cmd>VimspectorReset<cr>", "Reset" },
       H = { "<cmd>lua require('config.vimspector').toggle_human_mode()<cr>", "Toggle HUMAN mode" },
     },
+
+    t = {
+      name = "nvim-tree",
+      t = { "<cmd>NvimTreeToggle<cr>", "Toggle" },
+      f = { "<cmd>NvimTreeFindFile<cr>", "Find Current File" },
+    },
 })
