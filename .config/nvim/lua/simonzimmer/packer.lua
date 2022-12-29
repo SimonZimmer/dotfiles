@@ -70,6 +70,14 @@ return require('packer').startup(function(use)
         tag = 'nightly'
     }
 
+    use {
+      "folke/todo-comments.nvim",
+      requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup{}
+      end
+    }
+
     if is_bootstrap then
         require('packer').sync()
     end

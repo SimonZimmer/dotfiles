@@ -2,6 +2,7 @@ local wk = require("which-key")
 
 wk.register(mappings, opts)
 
+-- TODO: migrate to regular keymapping
 wk.register({
     v = {
       name = "Vimspector",
