@@ -12,6 +12,9 @@ export ZSH=/Users/simonzimmermann/.oh-my-zsh
 plugins=(git zsh-syntax-highlighting docker)
 source $ZSH/oh-my-zsh.sh
 
+#zoxide 
+eval "$(zoxide init zsh)"
+
 # BASIC
 # defaults
 export VISUAL=nvim
@@ -35,6 +38,7 @@ alias l='exa -lbF --git'
 alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 alias kitdiff="git difftool --no-symlinks --dir-diff"
+alias cd="z"
 
 #PATH
 export PATH="~/.cargo/bin/:$PATH"
