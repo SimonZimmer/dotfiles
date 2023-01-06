@@ -13,7 +13,6 @@ return require('packer').startup(function(use)
     use {
         {'nvim-telescope/telescope.nvim', tag = '0.1.0'},
         {'jvgrootveld/telescope-zoxide'},
-        -- or                            , branch = '0.1.x',
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
@@ -78,6 +77,19 @@ return require('packer').startup(function(use)
         require("todo-comments").setup{}
       end
     }
+
+    use {
+      "folke/twilight.nvim",
+      config = function()
+        require("twilight").setup {}
+      end
+    }
+
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" },
+    })
 
     if is_bootstrap then
         require('packer').sync()
