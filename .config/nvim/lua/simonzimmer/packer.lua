@@ -74,14 +74,14 @@ return require('packer').startup(function(use)
       "folke/todo-comments.nvim",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require("todo-comments").setup{}
+        require("todo-comments").setup()
       end
     }
 
     use {
       "folke/twilight.nvim",
       config = function()
-        require("twilight").setup {}
+        require("twilight").setup()
       end
     }
 
@@ -94,6 +94,18 @@ return require('packer').startup(function(use)
     if is_bootstrap then
         require('packer').sync()
     end
+
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+
+    use {
+      'lewis6991/gitsigns.nvim',
+      config = function()
+        require('gitsigns').setup()
+      end
+    }
 
 end)
 
