@@ -16,4 +16,4 @@ vim.opt.incsearch = true
 
 vim.opt.scrolloff = 8
 vim.opt.clipboard = 'unnamedplus'
-vim.opt.cmdheight = 0
+--vim.opt.cmdheight = 0

@@ -110,6 +110,5 @@ return require('packer').startup(function(use)
     use {
         'jiangmiao/auto-pairs'
     }
-
 end)
 
