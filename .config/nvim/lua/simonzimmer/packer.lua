@@ -11,8 +11,8 @@ return require('packer').startup(function(use)
     use 'wbthomason/packer.nvim'
 
     use {
-        'nvim-telescope/telescope.nvim', tag = '0.1.0',
-        -- or                            , branch = '0.1.x',
+        {'nvim-telescope/telescope.nvim', tag = '0.1.0'},
+        {'jvgrootveld/telescope-zoxide'},
         requires = { {'nvim-lua/plenary.nvim'} }
     }
 
@@ -74,13 +74,41 @@ return require('packer').startup(function(use)
       "folke/todo-comments.nvim",
       requires = "nvim-lua/plenary.nvim",
       config = function()
-        require("todo-comments").setup{}
+        require("todo-comments").setup()
       end
     }
+
+    use {
+      "folke/twilight.nvim",
+      config = function()
+        require("twilight").setup()
+      end
+    }
+
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" },
+    })
 
     if is_bootstrap then
         require('packer').sync()
     end
 
+    use {
+      'nvim-lualine/lualine.nvim',
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+    }
+
+    use {
+      'lewis6991/gitsigns.nvim',
+      config = function()
+        require('gitsigns').setup()
+      end
+    }
+
+    use {
+        'jiangmiao/auto-pairs'
+    }
 end)
 
