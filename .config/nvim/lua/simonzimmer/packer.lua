@@ -110,5 +110,15 @@ return require('packer').startup(function(use)
     use {
         'jiangmiao/auto-pairs'
     }
+
+    use {
+        'hrsh7th/nvim-cmp',
+        'hrsh7th/cmp-nvim-lsp',
+        'saadparwaiz1/cmp_luasnip',
+        'rafamadriz/friendly-snippets',
+        'L3MON4D3/LuaSnip',
+        require("luasnip.loaders.from_vscode").lazy_load()
+    }
+
 end)
 
