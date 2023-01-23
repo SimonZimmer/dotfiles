@@ -74,10 +74,20 @@ return require('packer').startup(function(use)
     })
 
     use {
-      'lewis6991/gitsigns.nvim',
-      config = function()
-        require('gitsigns').setup()
-      end
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup()
+        end
+    }
+
+    use 'mfussenegger/nvim-dap-python'
+    use 'theHamsta/nvim-dap-virtual-text'
+    use {
+        "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" },
+        -- requires debugpy in its own virtualenv
+        config = function()
+            require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+        end
     }
 
     if is_bootstrap then
