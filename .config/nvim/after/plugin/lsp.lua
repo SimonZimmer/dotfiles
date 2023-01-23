@@ -21,7 +21,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
 })
 
 lsp.on_attach(function(client, bufnr)
-	local opts = {buffer = bufnr, remap = false}
+	local opts = { buffer = bufnr, remap = false }
 
 	if client.name == "eslint" then
 		vim.cmd.LspStop('eslint')
@@ -40,10 +40,5 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require("lspconfig").sumneko_lua.setup {
-    on_attach = on_attach,
-    capabilities = capabilities
-}
 
 lsp.setup()

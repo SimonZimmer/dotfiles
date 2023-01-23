@@ -9,65 +9,47 @@ return require('packer').startup(function(use)
     end
 
     use 'wbthomason/packer.nvim'
-
-    use {
-        {'nvim-telescope/telescope.nvim', tag = '0.1.0'},
-        {'jvgrootveld/telescope-zoxide'},
-        requires = { {'nvim-lua/plenary.nvim'} }
-    }
-
+    use 'nvim-treesitter/nvim-treesitter'
+    use 'jiangmiao/auto-pairs'
     use 'navarasu/onedark.nvim'
-    require('onedark').setup {
-        style = 'dark'
-    }
     require('onedark').load()
 
-    use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
+    use {
+        {'nvim-telescope/telescope.nvim'},
+        {'jvgrootveld/telescope-zoxide'},
+        requires = {'nvim-lua/plenary.nvim'},
+        config = function()
+            require('telescope.builtin').setup()
+        end
+    }
 
     use {
         'VonHeikemen/lsp-zero.nvim',
         requires = {
-            -- LSP Support
+            -- LSP
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
 
-            -- Autocompletion
+            -- autocompletion
             {'hrsh7th/nvim-cmp'},
             {'hrsh7th/cmp-buffer'},
             {'hrsh7th/cmp-path'},
             {'saadparwaiz1/cmp_luasnip'},
             {'hrsh7th/cmp-nvim-lsp'},
             {'hrsh7th/cmp-nvim-lua'},
-
-            -- Snippets
             {'L3MON4D3/LuaSnip'},
             {'rafamadriz/friendly-snippets'},
+            require("luasnip.loaders.from_vscode").lazy_load()
         }
     }
 
     use {
-        "puremourning/vimspector",
-        cmd = { "VimspectorInstall", "VimspectorUpdate" },
-        fn = { "vimspector#Launch()", "vimspector#ToggleBreakpoint", "vimspector#Continue" },
-        config = function()
-            require("plugin.vimspector").setup()
-        end,
-    }
-
-    use {
-        "folke/which-key.nvim",
-        config = function()
-            require("which-key").setup()
-        end
-    }
-
-    use {
         'nvim-tree/nvim-tree.lua',
-        requires = {
-            'nvim-tree/nvim-web-devicons',
-        },
-        tag = 'nightly'
+        requires = {('nvim-tree/nvim-web-devicons')},
+        config = function()
+            require("nvim-tree").setup()
+        end
     }
 
     use {
@@ -91,15 +73,6 @@ return require('packer').startup(function(use)
         setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" },
     })
 
-    if is_bootstrap then
-        require('packer').sync()
-    end
-
-    use {
-      'nvim-lualine/lualine.nvim',
-      requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-    }
-
     use {
       'lewis6991/gitsigns.nvim',
       config = function()
@@ -107,18 +80,9 @@ return require('packer').startup(function(use)
       end
     }
 
-    use {
-        'jiangmiao/auto-pairs'
-    }
-
-    use {
-        'hrsh7th/nvim-cmp',
-        'hrsh7th/cmp-nvim-lsp',
-        'saadparwaiz1/cmp_luasnip',
-        'rafamadriz/friendly-snippets',
-        'L3MON4D3/LuaSnip',
-        require("luasnip.loaders.from_vscode").lazy_load()
-    }
+    if is_bootstrap then
+        require('packer').sync()
+    end
 
 end)
 
