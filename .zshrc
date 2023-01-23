@@ -50,3 +50,4 @@ export PATH="/usr/local/opt/llvm/bin:$PATH"
 export BAT_THEME="TwoDark"
 
 dotfiles config status.showUntrackedFiles no
+export PATH="/usr/local/opt/llvm/bin:$PATH"

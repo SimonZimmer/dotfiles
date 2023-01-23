@@ -1,74 +1,43 @@
-local dap = require 'dap'
-local ui  = require 'dapui'
-local vt  = require 'nvim-dap-virtual-text'
+vim.keymap.set('n', 'db', '<cmd>lua require"dap".toggle_breakpoint()<CR>', { desc = '[D]ebug [B]reakpoint' })
+vim.keymap.set('n', 'dc', '<cmd>lua require"dap".continue()<CR>', { desc = '[D]ebug [C]ontinue' })
+vim.keymap.set('n', 'do', '<cmd>lua require"dap".step_over()<CR>', { desc = '[D]ebug Step [O]ver' })
+vim.keymap.set('n', 'di', '<cmd>lua require"dap".step_into()<CR>', { desc = '[D]ebug Step [I]nto' })
 
-
-local signs = {
-	DapBreakpoint = {text='●', texthl='LspDiagnosticsDefaultError'},
-	DapLogPoint = {text='◉', texthl='LspDiagnosticsDefaultError'},
-	DapStopped = {text='➔', texthl='LspDiagnosticsDefaultInformation', linehl='CursorLine'},
+-- CPP
+require("dap").adapters.lldb = {
+	type = "executable",
+	command = "/usr/local/opt/llvm/bin/lldb-vscode",
+	name = "lldb",
 }
 
-vim.keymap.set('n', 'db', '<cmd>lua require"dap".toggle_breakpoint()<CR>', {})
-vim.keymap.set('n', 'dc', '<cmd>lua require"dap".continue()<CR>', {})
-vim.keymap.set('n', 'do', '<cmd>lua require"dap".step_over()<CR>', {})
-vim.keymap.set('n', 'di', '<cmd>lua require"dap".step_into()<CR>', {})
-
-local adapters = {
-	name = 'lldb-vscode',
-	type = 'executable',
-	attach = {
-		pidProperty = "pid",
-		pidSelect = "ask"
-	},
-	command = 'lldb-vscode',
+local lldb = {
+	name = "Launch lldb",
+	type = "lldb",
+	request = "launch", -- could also attach to a currently running process
+	program = function()
+		return vim.fn.input(
+			"Path to executable: ",
+			vim.fn.getcwd() .. "/",
+			"file"
+		)
+	end,
+	cwd = "${workspaceFolder}",
+	stopOnEntry = true,
 	args = {},
-	LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES",
-	options = {
-		env = {
-			LLDB_LAUNCH_FLAG_LAUNCH_IN_TTY = "YES",
-		},
-	},
+	runInTerminal = false,
 }
 
-local configurations = {
-	{
-		type = 'scala',
-		request = 'launch',
-		name = 'Run',
-		metals = {
-			runType = 'run',
-		},
-	}, {
-		type = 'scala',
-		request = 'launch',
-		name = 'Test file',
-		metals = {
-			runType = 'testFile',
-		},
-	}, {
-		type = 'scala',
-		request = 'launch',
-		name = 'Test target',
-		metals = {
-			runType = 'testTarget',
-		},
-	}
-}
+local dap = require('dap')
 
-for sign, options in pairs(signs) do
-	vim.fn.sign_define(sign, options)
-end
+dap.configurations.rust = { lldb }
+dap.configurations.cpp = { lldb }
 
-for language, adapter in pairs(adapters) do
-	dap.adapters[language] = adapter
-end
+vim.fn.sign_define('DapBreakpoint', { text='●', texthl='LspDiagnosticsDefaultError' })
+vim.fn.sign_define('DapLogPoint' , { text='◉', texthl='LspDiagnosticsDefaultError' })
+vim.fn.sign_define('DapStopped' , { text='➔', texthl='LspDiagnosticsDefaultInformation',
+                                    linehl='CursorLine' })
 
-for language, configs in pairs(configurations) do
-	dap.configurations[language] = configs
-end
-
-
+local ui  = require 'dapui'
 dap.listeners.after['event_initialized']['dapui_config'] = function()
 	ui.open({})
 end
@@ -81,9 +50,8 @@ dap.listeners.before['event_exited']['dapui_config'] = function()
 	ui.close({})
 end
 
-
+local vt  = require 'nvim-dap-virtual-text'
 vt.setup {}
-
 
 ui.setup {
 	mappings = {

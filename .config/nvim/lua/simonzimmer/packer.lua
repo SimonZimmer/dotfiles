@@ -80,10 +80,11 @@ return require('packer').startup(function(use)
         end
     }
 
-    use 'mfussenegger/nvim-dap-python'
+    use "mfussenegger/nvim-dap"
     use 'theHamsta/nvim-dap-virtual-text'
+    use "rcarriga/nvim-dap-ui"
+    use 'mfussenegger/nvim-dap-python'
     use {
-        "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" },
         -- requires debugpy in its own virtualenv
         config = function()
             require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
