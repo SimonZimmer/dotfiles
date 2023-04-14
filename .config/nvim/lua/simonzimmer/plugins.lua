@@ -43,6 +43,7 @@ require("lazy").setup(
     'theHamsta/nvim-dap-virtual-text',
     'rcarriga/nvim-dap-ui',
     'mfussenegger/nvim-dap-python',
+    'onsails/lspkind.nvim'
 })
 
 
