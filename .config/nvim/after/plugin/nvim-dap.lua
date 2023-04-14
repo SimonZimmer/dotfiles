@@ -2,6 +2,7 @@ vim.keymap.set('n', 'db', '<cmd>lua require"dap".toggle_breakpoint()<CR>', { des
 vim.keymap.set('n', 'dc', '<cmd>lua require"dap".continue()<CR>', { desc = '[D]ebug [C]ontinue' })
 vim.keymap.set('n', 'do', '<cmd>lua require"dap".step_over()<CR>', { desc = '[D]ebug Step [O]ver' })
 vim.keymap.set('n', 'di', '<cmd>lua require"dap".step_into()<CR>', { desc = '[D]ebug Step [I]nto' })
+vim.keymap.set('n', 'dt', '<cmd>lua require"dap-python".test_method()<CR>', { desc = '[D]ebug [T]est' })
 
 -- CPP
 require("dap").adapters.lldb = {

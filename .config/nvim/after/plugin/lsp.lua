@@ -1,7 +1,8 @@
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
+vim.g.python_host_prog = '/usr/local/bin/python'
+vim.g.python3_host_prog = '/usr/local/bin/python3'
 lsp.ensure_installed({
-	'sumneko_lua',
     'clangd',
     'pylsp',
     'cmake',

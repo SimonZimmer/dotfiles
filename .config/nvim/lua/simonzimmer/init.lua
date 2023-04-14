@@ -1,3 +1,4 @@
 require("simonzimmer.remap")
-require("simonzimmer.packer")
 require("simonzimmer.set")
+require("simonzimmer.plugins")
+
