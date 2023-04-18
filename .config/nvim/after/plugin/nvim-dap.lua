@@ -4,45 +4,20 @@ vim.keymap.set('n', 'do', '<cmd>lua require"dap".step_over()<CR>', { desc = '[D]
 vim.keymap.set('n', 'di', '<cmd>lua require"dap".step_into()<CR>', { desc = '[D]ebug Step [I]nto' })
 vim.keymap.set('n', 'dt', '<cmd>lua require"dap-python".test_method()<CR>', { desc = '[D]ebug [T]est' })
 
--- CPP
-require("dap").adapters.lldb = {
-	type = "executable",
-	command = "/usr/local/opt/llvm/bin/lldb-vscode",
-	name = "lldb",
-}
-
-local lldb = {
-	name = "Launch lldb",
-	type = "lldb",
-	request = "launch", -- could also attach to a currently running process
-	program = function()
-		return vim.fn.input(
-			"Path to executable: ",
-			vim.fn.getcwd() .. "/",
-			"file"
-		)
-	end,
-	cwd = "${workspaceFolder}",
-	stopOnEntry = true,
-	args = {},
-	runInTerminal = false,
-}
-
 local dap = require('dap')
-
-dap.configurations.rust = { lldb }
-dap.configurations.cpp = { lldb }
 
 vim.fn.sign_define('DapBreakpoint', { text='●', texthl='LspDiagnosticsDefaultError' })
 vim.fn.sign_define('DapLogPoint' , { text='◉', texthl='LspDiagnosticsDefaultError' })
 vim.fn.sign_define('DapStopped' , { text='➔', texthl='LspDiagnosticsDefaultInformation',
                                     linehl='CursorLine' })
 
+-- Python
+require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+
 local ui  = require 'dapui'
 dap.listeners.after['event_initialized']['dapui_config'] = function()
 	ui.open({})
 end
-
 dap.listeners.before['event_terminated']['dapui_config'] = function()
 	ui.close({})
 end
@@ -94,3 +69,31 @@ end
 
 vim.keymap.set({'n', 'v'}, '<M-k>', ui.eval, {})
 vim.keymap.set('n', '<M-K>', dapui_eval, {})
+
+
+-- CPP
+require("dap").adapters.lldb = {
+	type = "executable",
+	command = "/usr/local/opt/llvm/bin/lldb-vscode",
+	name = "lldb",
+}
+
+local lldb = {
+	name = "Launch lldb",
+	type = "lldb",
+	request = "launch", -- could also attach to a currently running process
+	program = function()
+		return vim.fn.input(
+			"Path to executable: ",
+			vim.fn.getcwd() .. "/",
+			"file"
+		)
+	end,
+	cwd = "${workspaceFolder}",
+	stopOnEntry = true,
+	args = {},
+	runInTerminal = false,
+}
+
+dap.configurations.rust = { lldb }
+dap.configurations.cpp = { lldb }
