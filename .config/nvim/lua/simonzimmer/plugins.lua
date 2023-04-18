@@ -45,3 +45,6 @@ require("lazy").setup(
 })
 
 require('onedark').load()
+require('todo-comments').setup()
+require('twilight').setup()
+require('gitsigns').setup()
