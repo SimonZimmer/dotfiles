@@ -1,7 +1,7 @@
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 vim.g.python_host_prog = '/usr/local/bin/python'
-vim.g.python3_host_prog = '/usr/local/bin/python3'
+vim.g.python3_host_prog = '~/.virtualenvs/neovim/bin/python'
 lsp.ensure_installed({
     'clangd',
     'pylsp',
