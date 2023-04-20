@@ -49,3 +49,4 @@ require('todo-comments').setup()
 require('twilight').setup()
 require('gitsigns').setup()
 require('mason').setup()
+require'lspconfig'.clangd.setup{}

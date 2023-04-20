@@ -51,3 +51,5 @@ export BAT_THEME="TwoDark"
 
 dotfiles config status.showUntrackedFiles no
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+
+export CMAKE_USER_MAKE_RULES_OVERRIDE=$HOME/.config/cmake_options.txt
