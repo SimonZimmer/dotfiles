@@ -28,6 +28,7 @@ require("lazy").setup(
     'folke/twilight.nvim',
     'iamcco/markdown-preview.nvim',
     'lewis6991/gitsigns.nvim',
+    'Pocco81/auto-save.nvim',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -45,8 +46,6 @@ require("lazy").setup(
 })
 
 require('onedark').load()
-require('todo-comments').setup()
-require('twilight').setup()
 require('gitsigns').setup()
 require('mason').setup()
-require'lspconfig'.clangd.setup{}
+require('auto-save').setup()
