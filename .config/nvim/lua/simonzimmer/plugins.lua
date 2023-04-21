@@ -22,11 +22,11 @@ require("lazy").setup(
     'neovim/nvim-lspconfig',
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
+    'WhoIsSethDaniel/mason-tool-installer.nvim',
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
     'folke/todo-comments.nvim',
     'folke/twilight.nvim',
-    'iamcco/markdown-preview.nvim',
     'lewis6991/gitsigns.nvim',
     'Pocco81/auto-save.nvim',
     -- autocompletion
@@ -42,7 +42,7 @@ require("lazy").setup(
     'mfussenegger/nvim-dap',
     'rcarriga/nvim-dap-ui',
     'theHamsta/nvim-dap-virtual-text',
-    'mfussenegger/nvim-dap-python'
+    'mfussenegger/nvim-dap-python',
 })
 
 require('onedark').load()
