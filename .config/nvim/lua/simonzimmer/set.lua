@@ -17,6 +17,4 @@ vim.opt.incsearch = true
 vim.opt.scrolloff = 8
 vim.opt.clipboard = 'unnamedplus'
 
-vim.g.loaded_netrw = true
-vim.g.loaded_netrwPlugin = true
 vim.g.noswapfile = true
