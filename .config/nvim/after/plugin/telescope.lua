@@ -1,7 +1,7 @@
 local ts = require 'telescope'
-local M = {}
+local u = {}
 
-function M.length(table)
+function u.length(table)
     local count = 0
     for _, _ in ipairs(table) do
         count = count + 1
@@ -9,8 +9,8 @@ function M.length(table)
     return count
 end
 
-M.border_chars_outer_thin_telescope = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" }
-M.border_chars_outer_thick_telescope = { "▀", "▐", "▄", "▌", "▛", "▜", "▟", "▙" }
+u.border_chars_outer_thin_telescope = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" }
+u.border_chars_outer_thick_telescope = { "▀", "▐", "▄", "▌", "▛", "▜", "▟", "▙" }
 
 -- Setup.
 ts.setup({
@@ -21,14 +21,14 @@ ts.setup({
             prompt_position = 'top'
         },
         borderchars = {
-            prompt = M.border_chars_outer_thin_telescope,
-            results = M.border_chars_outer_thin_telescope,
-            preview = M.border_chars_outer_thin_telescope
+            prompt = u.border_chars_outer_thin_telescope,
+            results = u.border_chars_outer_thin_telescope,
+            preview = u.border_chars_outer_thin_telescope
         },
         border = true,
         multi_icon = '',
         entry_prefix = '   ',
-        prompt_prefix = '   ',
+        prompt_prefix = '  🔎 ',
         selection_caret = '  ',
         hl_result_eol = true,
         results_title = "",
