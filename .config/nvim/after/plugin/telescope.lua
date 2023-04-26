@@ -9,8 +9,7 @@ function u.length(table)
     return count
 end
 
-u.border_chars_outer_thin_telescope = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" }
-u.border_chars_outer_thick_telescope = { "▀", "▐", "▄", "▌", "▛", "▜", "▟", "▙" }
+u.border_chars_outer_telescope = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" }
 
 -- Setup.
 ts.setup({
@@ -21,15 +20,15 @@ ts.setup({
             prompt_position = 'top'
         },
         borderchars = {
-            prompt = u.border_chars_outer_thin_telescope,
-            results = u.border_chars_outer_thin_telescope,
-            preview = u.border_chars_outer_thin_telescope
+            prompt = u.border_chars_outer_telescope,
+            results = u.border_chars_outer_telescope,
+            preview = u.border_chars_outer_telescope
         },
         border = true,
         multi_icon = '',
         entry_prefix = '   ',
         prompt_prefix = '  🔎 ',
-        selection_caret = '  ',
+        selection_caret = ' ▶ ',
         hl_result_eol = true,
         results_title = "",
         winblend = 0,

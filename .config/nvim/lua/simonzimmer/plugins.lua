@@ -14,7 +14,15 @@ vim.g.mapleader = " "
 require("lazy").setup(
 {
     'nvim-treesitter/nvim-treesitter',
-    'navarasu/onedark.nvim',
+    {
+        'AlexvZyl/nordic.nvim',
+        lazy = false,
+        priority = 1000,
+        config = function()
+            require 'nordic'.load()
+        end
+    },
+    'folke/trouble.nvim',
     'nvim-telescope/telescope.nvim',
     'jvgrootveld/telescope-zoxide',
     'nvim-lua/plenary.nvim',
@@ -44,7 +52,6 @@ require("lazy").setup(
     'mfussenegger/nvim-dap-python',
 })
 
-require('onedark').load()
 require('gitsigns').setup()
 require('mason').setup()
 require('auto-save').setup()
