@@ -14,7 +14,7 @@ Also stores some configuration for `git` and `conan`.
 ```
  git clone \
    --separate-git-dir=$HOME/dotfiles \
-   git@github.com:SimonZimmer/dotfiles.git \
+   https://github.com/SimonZimmer/dotfiles \
    dotfiles-tmp
 ```
 
