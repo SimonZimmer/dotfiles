@@ -8,6 +8,8 @@ Also stores some configuration for `git` and `conan`.
 
 # 📚 Requirements
 * Neovim >= 0.9.0
+* Zoxide
+* Python
 
 # 📦 Installation
 * Clone your repo onto the new machine as a non-bare repository into a temporary directory
