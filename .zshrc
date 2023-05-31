@@ -6,14 +6,7 @@ source ~/.p10k.zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 export PATH=/usr/local/bin:$PATH
-
-export ZSH=/Users/simonzimmermann/.oh-my-zsh
-# plugins
-plugins=(git zsh-syntax-highlighting docker)
-source $ZSH/oh-my-zsh.sh
-
-#zoxide 
-eval "$(zoxide init zsh)"
+export ZSH=~/.oh-my-zsh
 
 # BASIC
 # defaults
@@ -38,7 +31,7 @@ alias l='exa -lbF --git'
 alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 alias kitdiff="git difftool --no-symlinks --dir-diff"
-alias cd="z"
+alias python=/usr/bin/python3
 
 #PATH
 export PATH="~/.cargo/bin/:$PATH"
@@ -53,3 +46,27 @@ dotfiles config status.showUntrackedFiles no
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 
 export CMAKE_USER_MAKE_RULES_OVERRIDE=$HOME/.config/cmake_options.txt
+source /Users/m1_dev/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /Users/m1_dev/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+source ~/powerlevel10k/powerlevel10k.zsh-theme
+
+# AUTOCOMPLETION
+# initialize autocompletion
+autoload -U compinit
+compinit
+
+# history setup
+setopt APPEND_HISTORY
+setopt SHARE_HISTORY
+HISTFILE=$HOME/.zhistory
+SAVEHIST=10000
+HISTSIZE=9999
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt EXTENDED_HISTORY
+
+# autocompletion using arrow keys (based on history)
+bindkey '\e[A' history-search-backward
+bindkey '\e[B' history-search-forward
+
+source ~/dev/zsh-autocomplete/zsh-autocomplete.plugin.zsh
