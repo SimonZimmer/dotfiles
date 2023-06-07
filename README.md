@@ -8,6 +8,10 @@ Also stores some configuration for `git` and `conan`.
 
 # 📚 Requirements
 * Neovim >= 0.9.0
+* Zoxide
+* Python
+* [ripgrep](https://github.com/BurntSushi/ripgrep#installation)
+* [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.1/FiraMono.zip)
 
 # 📦 Installation
 * Clone your repo onto the new machine as a non-bare repository into a temporary directory
