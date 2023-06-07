@@ -14,14 +14,7 @@ vim.g.mapleader = " "
 require("lazy").setup(
 {
     'nvim-treesitter/nvim-treesitter',
-    {
-        'AlexvZyl/nordic.nvim',
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require 'nordic'.load()
-        end
-    },
+    'AlexvZyl/nordic.nvim',
     'folke/trouble.nvim',
     'nvim-telescope/telescope.nvim',
     'jvgrootveld/telescope-zoxide',
@@ -36,6 +29,7 @@ require("lazy").setup(
     'folke/twilight.nvim',
     'lewis6991/gitsigns.nvim',
     'Pocco81/auto-save.nvim',
+    'APZelos/blamer.nvim',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -45,6 +39,7 @@ require("lazy").setup(
     'rafamadriz/friendly-snippets',
     'onsails/lspkind.nvim',
     'github/copilot.vim',
+    'simrat39/rust-tools.nvim',
     -- debugging
     'mfussenegger/nvim-dap',
     'rcarriga/nvim-dap-ui',
@@ -55,3 +50,43 @@ require("lazy").setup(
 require('gitsigns').setup()
 require('mason').setup()
 require('auto-save').setup()
+
+require('nordic').setup {
+    theme='onedark',
+    onedark = {
+        brighter_whites = true,
+    },
+    bright_border = false,
+    telescope = {
+        style = 'flat',
+    },
+    nordic = {
+        reduced_blue = true,
+    },
+    bold_keywords = false,
+    italic_comments = true,
+    transparent_bg = false,
+    cursorline = {
+        theme = 'flat',
+        bold = false,
+    },
+    noice = {
+        style = 'classic',
+    },
+}
+
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
+
+-- Load the scheme.
+vim.cmd.colorscheme 'nordic'
