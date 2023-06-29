@@ -30,6 +30,8 @@ require("lazy").setup(
     'lewis6991/gitsigns.nvim',
     'Pocco81/auto-save.nvim',
     'APZelos/blamer.nvim',
+    'nvim-pack/nvim-spectre',
+    'rhysd/vim-clang-format',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',

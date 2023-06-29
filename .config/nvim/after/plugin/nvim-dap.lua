@@ -72,7 +72,7 @@ require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
 -- CPP
 require('dap').adapters.lldb = {
 	type = 'executable',
-	command = '/usr/local/opt/llvm/bin/lldb-vscode',
+    command = '/opt/homebrew/opt/llvm/bin/lldb-vscode',
 	name = 'lldb',
 }
 
