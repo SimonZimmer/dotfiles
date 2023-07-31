@@ -14,7 +14,8 @@ vim.g.mapleader = " "
 require("lazy").setup(
 {
     'nvim-treesitter/nvim-treesitter',
-    'AlexvZyl/nordic.nvim',
+    --'AlexvZyl/nordic.nvim',
+    'navarasu/onedark.nvim',
     'folke/trouble.nvim',
     'nvim-telescope/telescope.nvim',
     'jvgrootveld/telescope-zoxide',
@@ -32,6 +33,9 @@ require("lazy").setup(
     'APZelos/blamer.nvim',
     'nvim-pack/nvim-spectre',
     'rhysd/vim-clang-format',
+    'nvim-pack/nvim-spectre',
+    'rhysd/vim-clang-format',
+    'rmagatti/goto-preview',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -52,30 +56,11 @@ require("lazy").setup(
 require('gitsigns').setup()
 require('mason').setup()
 require('auto-save').setup()
-
-require('nordic').setup {
-    theme='onedark',
-    onedark = {
-        brighter_whites = true,
-    },
-    bright_border = false,
-    telescope = {
-        style = 'flat',
-    },
-    nordic = {
-        reduced_blue = true,
-    },
-    bold_keywords = false,
-    italic_comments = true,
-    transparent_bg = false,
-    cursorline = {
-        theme = 'flat',
-        bold = false,
-    },
-    noice = {
-        style = 'classic',
-    },
+require('goto-preview').setup()
+require('onedark').setup {
+    style = 'dark'
 }
+require('onedark').load()
 
 local rt = require("rust-tools")
 
@@ -89,6 +74,3 @@ rt.setup({
     end,
   },
 })
-
--- Load the scheme.
-vim.cmd.colorscheme 'nordic'

@@ -9,7 +9,7 @@ function u.length(table)
     return count
 end
 
-u.border_chars_outer_telescope = { "▔", "▕", "▁", "▏", "🭽", "🭾", "🭿", "🭼" }
+u.border_chars_outer_telescope = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' }
 
 -- Setup.
 ts.setup({
@@ -31,7 +31,7 @@ ts.setup({
         selection_caret = ' ▶ ',
         hl_result_eol = true,
         results_title = "",
-        winblend = 0,
+        winblend = 1,
         wrap_results = true
     }
 })
