@@ -46,6 +46,7 @@ require("lazy").setup(
     'onsails/lspkind.nvim',
     'github/copilot.vim',
     'simrat39/rust-tools.nvim',
+    'jose-elias-alvarez/null-ls.nvim',
     -- debugging
     'mfussenegger/nvim-dap',
     'rcarriga/nvim-dap-ui',
