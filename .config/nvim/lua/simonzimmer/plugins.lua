@@ -29,13 +29,15 @@ require("lazy").setup(
     'folke/todo-comments.nvim',
     'folke/twilight.nvim',
     'lewis6991/gitsigns.nvim',
-    'Pocco81/auto-save.nvim',
     'APZelos/blamer.nvim',
     'nvim-pack/nvim-spectre',
     'rhysd/vim-clang-format',
     'nvim-pack/nvim-spectre',
     'rhysd/vim-clang-format',
     'rmagatti/goto-preview',
+    'nvim-neotest/neotest',
+    'nvim-neotest/neotest-python',
+    'antoinemadec/FixCursorHold.nvim',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -56,7 +58,6 @@ require("lazy").setup(
 
 require('gitsigns').setup()
 require('mason').setup()
-require('auto-save').setup()
 require('goto-preview').setup()
 require('onedark').setup {
     style = 'dark'
@@ -74,4 +75,12 @@ rt.setup({
       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
     end,
   },
+})
+
+require("neotest").setup({
+  adapters = {
+    require("neotest-python")({
+        runner = "pytest",
+    })
+  }
 })

@@ -18,3 +18,5 @@ vim.opt.scrolloff = 8
 vim.opt.clipboard = 'unnamedplus'
 
 vim.g.noswapfile = true
+
+vim.api.nvim_set_keymap('x', 'p', 'pgvy', { noremap = true, silent = true })
