@@ -38,6 +38,7 @@ require("lazy").setup(
     'nvim-neotest/neotest',
     'nvim-neotest/neotest-python',
     'antoinemadec/FixCursorHold.nvim',
+    'andythigpen/nvim-coverage',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -56,6 +57,7 @@ require("lazy").setup(
     'mfussenegger/nvim-dap-python',
 })
 
+require("coverage").setup()
 require('gitsigns').setup()
 require('mason').setup()
 require('goto-preview').setup()

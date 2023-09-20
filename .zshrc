@@ -45,6 +45,7 @@ export LD_LIBRARY_PATH="/Library/Developer/CommandLineTools/usr/lib/:$LD_LIBRARY
 export PATH="/usr/local/Cellar/llvm/13.0.1_1/bin/:$PATH"
 export PATH="/usr/local//Cellar/llvm/14.0.6_1/bin/clangd:$PATH"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+export PATH="/Applications/Pd-0.53-1.app/Contents/MacOS:$PATH"
 export BAT_THEME="TwoDark"
 
 dotfiles config status.showUntrackedFiles no
