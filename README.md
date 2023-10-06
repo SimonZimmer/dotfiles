@@ -14,7 +14,7 @@ Also stores some configuration for `git` and `conan`.
 * [Hack Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.1/FiraMono.zip)
 
 # 📦 Installation
-* Clone your repo onto the new machine as a non-bare repository into a temporary directory
+* Clone your repo onto the new machine as a bare repository into a temporary directory
 ```
  git clone \
    --separate-git-dir=$HOME/dotfiles \
