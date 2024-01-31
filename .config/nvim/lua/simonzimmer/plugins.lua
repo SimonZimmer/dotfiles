@@ -13,93 +13,106 @@ vim.g.mapleader = " "
 
 require("lazy").setup(
 {
-    'neovim/nvim-lspconfig',
-    {
+    'L3MON4D3/LuaSnip',
     'VonHeikemen/lsp-zero.nvim',
-    config = function()
-        require("lsp-zero").setup()
-        require('lspconfig').lua_ls.setup({})
-    end,
-    },
-    {
-        "williamboman/mason.nvim",
-        config = function()
-            require('mason').setup({
-              ensure_installed = {
-                "clangd",
-                "clang-format",
-                "codelldb",
-                "cmake-language-server",
-                "flake8",
-                "pyright",
-                "black",
-                "rust_analyzer",
-                "sumneko_lua"
-              }
-            })
-        end,
-    },
     'jose-elias-alvarez/null-ls.nvim',
-    'folke/trouble.nvim',
-    'nvim-telescope/telescope.nvim',
-    'jvgrootveld/telescope-zoxide',
-    'nvim-lua/plenary.nvim',
-    'williamboman/mason-lspconfig.nvim',
-    {
-        'nvim-tree/nvim-tree.lua',
-        config = function()
-            require 'nvim-tree'.setup({
-                hijack_cursor = true,
-                sync_root_with_cwd = true,
-                view = view,
-                git = {
-                    ignore = false
-                },
-                renderer = renderer,
-                diagnostics = {
-                    enable = true
-                }
-            })
-        end
-    },
-    'nvim-tree/nvim-web-devicons',
-    'folke/todo-comments.nvim',
-    'folke/twilight.nvim',
-    'APZelos/blamer.nvim',
     'nvim-treesitter/nvim-treesitter',
     {
         'navarasu/onedark.nvim',
         config = function()
-          require("onedark").setup({
-              style = 'dark'
-          })
-          require("onedark").load()
+            require('onedark').setup {
+                style = 'dark'
+            }
+            require('onedark').load()
         end,
     },
+    'folke/trouble.nvim',
+    'nvim-telescope/telescope.nvim',
+    'jvgrootveld/telescope-zoxide',
+    'nvim-lua/plenary.nvim',
+    {
+        'williamboman/mason.nvim',
+        config = function()
+            require('mason').setup()
+        end,
+    },
+    {
+        'williamboman/mason-lspconfig.nvim',
+        config = function()
+            require("mason-lspconfig").setup{
+                ensure_installed = {
+                    "lua_ls",
+                    "rust_analyzer",
+                    "clangd",
+                    "pyright",
+                    "pylsp",
+                },
+            }
+        end,
+    },
+    {
+        'w0rp/ale',
+        config = function()
+            vim.g.ale_fix_on_save = 1
+            vim.g.ale_linters = {
+                python = {'flake8', 'black'},
+                c = {'clang', 'clangtidy'},
+                cpp = {'clang', 'clangtidy'},
+                bash = {'shellcheck'},
+            }
+            vim.g.ale_fixers = {
+                python = {'black'},
+                c = {'clang-format', 'clangtidy'},
+                cpp = {'clang-format', 'clangtidy'},
+                bash = {'shfmt'},
+            }
+            vim.g.ale_sign_error = '✗'
+            vim.g.ale_sign_warning = '⚠'
+            vim.g.ale_sign_info = 'ℹ'
+            vim.g.ale_sign_style_error = '✗'
+            vim.g.ale_sign_style_warning = '⚠'
+            vim.g.ale_sign_style_info = 'ℹ'
+            vim.g.ale_echo_msg_error_str = '✗'
+            vim.g.ale_echo_msg_warning_str = '⚠'
+            vim.g.ale_echo_msg_info_str = 'ℹ'
+            vim.g.ale_echo_msg_format = '[%linter%] %s [%severity%]'
+            vim.g.ale_lint_on_insert_leave = 1
+            vim.g.ale_lint_on_insert = 0
+            vim.g.ale_lint_on_text_changed = 'never'
+            vim.g.ale_lint_on_enter = 0
+            vim.g.ale_lint_on_filetype_changed = 0
+            vim.g.ale_lint_on_save = 0
+            vim.g.ale_lint_on_cursor_hold = 0
+            vim.g.ale_lint_on_cursor_moved = 0
+            vim.g.ale_lint_on_insert = 0
+        end
+    },
+    {
+        'WhoIsSethDaniel/mason-tool-installer.nvim',
+        config = function()
+            require('mason-tool-installer').setup {
+                ensure_installed = {
+                  'cmake-language-server',
+                  'lua-language-server',
+                  'bash-language-server',
+                },
+                auto_update = true,
+            }
+        end,
+    },
+    'neovim/nvim-lspconfig',
+    'onsails/lspkind.nvim',
+    'nvim-tree/nvim-web-devicons',
+    'nvim-tree/nvim-tree.lua',
+    'folke/todo-comments.nvim',
     {
         'lewis6991/gitsigns.nvim',
         config = function()
             require('gitsigns').setup()
         end,
     },
-    'rhysd/vim-clang-format',
-    {
-        'nvim-pack/nvim-spectre',
-        keys = {
-            { "<leader>S", "<cmd>lua require('spectre').open()<CR>", desc = "Open Spectre" },
-        },
-    },
-    'rhysd/vim-clang-format',
-    {
-        'rmagatti/goto-preview',
-        config = function()
-            require('goto-preview').setup()
-        end,
-    },
-    'mfussenegger/nvim-dap',
-    'rcarriga/nvim-dap-ui',
-    'theHamsta/nvim-dap-virtual-text',
-    'mfussenegger/nvim-dap-python',
+    'APZelos/blamer.nvim',
+    'nvim-treesitter/nvim-treesitter',
     'nvim-neotest/neotest-python',
     {
     'nvim-neotest/neotest',
@@ -113,29 +126,23 @@ require("lazy").setup(
         })
     end,
     },
-    'antoinemadec/FixCursorHold.nvim',
+    {
+        'stevearc/oil.nvim',
+        config = function()
+            require('oil').setup()
+        end,
+    },
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',
-    'rafamadriz/friendly-snippets',
-    'onsails/lspkind.nvim',
     'github/copilot.vim',
     -- debugging
-    'rhysd/vim-clang-format',
-    {
-        'simrat39/rust-tools.nvim',
-        config = function()
-            require('rust-tools').setup({
-              server = {
-                on_attach = function(_, bufnr)
-                  vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-                  vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-                end,
-              },
-            })
-        end,
-    },
+    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
+    'theHamsta/nvim-dap-virtual-text',
+    'mfussenegger/nvim-dap-python',
 })
+

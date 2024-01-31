@@ -49,3 +49,16 @@ local view = {
         padding = 1
     },
 }
+
+require 'nvim-tree'.setup {
+    hijack_cursor = true,
+    sync_root_with_cwd = true,
+    view = view,
+    git = {
+        ignore = false
+    },
+    renderer = renderer,
+    diagnostics = {
+        enable = true
+    }
+}

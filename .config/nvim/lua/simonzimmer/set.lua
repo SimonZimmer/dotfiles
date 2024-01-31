@@ -19,6 +19,6 @@ vim.opt.clipboard = 'unnamedplus'
 
 vim.g.noswapfile = true
 
-vim.o.laststatus = 0
+vim.opt.laststatus = 0
 
 vim.api.nvim_set_keymap('x', 'p', 'pgvy', { noremap = true, silent = true })
