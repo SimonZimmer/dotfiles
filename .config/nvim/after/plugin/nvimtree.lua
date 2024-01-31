@@ -42,25 +42,10 @@ local renderer = {
 
 local view = {
     cursorline = false,
-    hide_root_folder = false,
     signcolumn = 'no',
     width = {
         max = 40,
         min = 40,
         padding = 1
     },
-}
-
--- Setup.
-require 'nvim-tree'.setup {
-    hijack_cursor = true,
-    sync_root_with_cwd = true,
-    view = view,
-    git = {
-        ignore = false
-    },
-    renderer = renderer,
-    diagnostics = {
-        enable = true
-    }
 }

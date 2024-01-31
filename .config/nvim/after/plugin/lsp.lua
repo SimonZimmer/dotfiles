@@ -1,12 +1,5 @@
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
-lsp.ensure_installed({
-    'clangd',
-    'pylsp',
-    'cmake',
-    'black',
-    'flake8',
-})
 
 -- Python
 vim.g.python_host_prog = '/usr/local/bin/python'

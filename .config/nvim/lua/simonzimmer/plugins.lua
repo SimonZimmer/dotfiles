@@ -13,32 +13,107 @@ vim.g.mapleader = " "
 
 require("lazy").setup(
 {
-    'nvim-treesitter/nvim-treesitter',
-    --'AlexvZyl/nordic.nvim',
-    'navarasu/onedark.nvim',
+    'neovim/nvim-lspconfig',
+    {
+    'VonHeikemen/lsp-zero.nvim',
+    config = function()
+        require("lsp-zero").setup()
+        require('lspconfig').lua_ls.setup({})
+    end,
+    },
+    {
+        "williamboman/mason.nvim",
+        config = function()
+            require('mason').setup({
+              ensure_installed = {
+                "clangd",
+                "clang-format",
+                "codelldb",
+                "cmake-language-server",
+                "flake8",
+                "pyright",
+                "black",
+                "rust_analyzer",
+                "sumneko_lua"
+              }
+            })
+        end,
+    },
+    'jose-elias-alvarez/null-ls.nvim',
     'folke/trouble.nvim',
     'nvim-telescope/telescope.nvim',
     'jvgrootveld/telescope-zoxide',
     'nvim-lua/plenary.nvim',
-    'VonHeikemen/lsp-zero.nvim',
-    'neovim/nvim-lspconfig',
-    'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'nvim-tree/nvim-tree.lua',
+    {
+        'nvim-tree/nvim-tree.lua',
+        config = function()
+            require 'nvim-tree'.setup({
+                hijack_cursor = true,
+                sync_root_with_cwd = true,
+                view = view,
+                git = {
+                    ignore = false
+                },
+                renderer = renderer,
+                diagnostics = {
+                    enable = true
+                }
+            })
+        end
+    },
     'nvim-tree/nvim-web-devicons',
     'folke/todo-comments.nvim',
     'folke/twilight.nvim',
-    'lewis6991/gitsigns.nvim',
     'APZelos/blamer.nvim',
-    'nvim-pack/nvim-spectre',
+    'nvim-treesitter/nvim-treesitter',
+    {
+        'navarasu/onedark.nvim',
+        config = function()
+          require("onedark").setup({
+              style = 'dark'
+          })
+          require("onedark").load()
+        end,
+    },
+    {
+        'lewis6991/gitsigns.nvim',
+        config = function()
+            require('gitsigns').setup()
+        end,
+    },
     'rhysd/vim-clang-format',
-    'nvim-pack/nvim-spectre',
+    {
+        'nvim-pack/nvim-spectre',
+        keys = {
+            { "<leader>S", "<cmd>lua require('spectre').open()<CR>", desc = "Open Spectre" },
+        },
+    },
     'rhysd/vim-clang-format',
-    'rmagatti/goto-preview',
-    'nvim-neotest/neotest',
+    {
+        'rmagatti/goto-preview',
+        config = function()
+            require('goto-preview').setup()
+        end,
+    },
+    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
+    'theHamsta/nvim-dap-virtual-text',
+    'mfussenegger/nvim-dap-python',
     'nvim-neotest/neotest-python',
+    {
+    'nvim-neotest/neotest',
+    config = function()
+        require("neotest").setup({
+            adapters = {
+                require("neotest-python")({
+                    runner = "pytest",
+                })
+            }
+        })
+    end,
+    },
     'antoinemadec/FixCursorHold.nvim',
-    'andythigpen/nvim-coverage',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -48,41 +123,19 @@ require("lazy").setup(
     'rafamadriz/friendly-snippets',
     'onsails/lspkind.nvim',
     'github/copilot.vim',
-    'simrat39/rust-tools.nvim',
-    'jose-elias-alvarez/null-ls.nvim',
     -- debugging
-    'mfussenegger/nvim-dap',
-    'rcarriga/nvim-dap-ui',
-    'theHamsta/nvim-dap-virtual-text',
-    'mfussenegger/nvim-dap-python',
-})
-
-require("coverage").setup()
-require('gitsigns').setup()
-require('mason').setup()
-require('goto-preview').setup()
-require('onedark').setup {
-    style = 'dark'
-}
-require('onedark').load()
-
-local rt = require("rust-tools")
-
-rt.setup({
-  server = {
-    on_attach = function(_, bufnr)
-      -- Hover actions
-      vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
-      -- Code action groups
-      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
-    end,
-  },
-})
-
-require("neotest").setup({
-  adapters = {
-    require("neotest-python")({
-        runner = "pytest",
-    })
-  }
+    'rhysd/vim-clang-format',
+    {
+        'simrat39/rust-tools.nvim',
+        config = function()
+            require('rust-tools').setup({
+              server = {
+                on_attach = function(_, bufnr)
+                  vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+                  vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+                end,
+              },
+            })
+        end,
+    },
 })
