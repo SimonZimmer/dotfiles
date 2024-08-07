@@ -13,7 +13,6 @@ vim.g.mapleader = " "
 
 require("lazy").setup(
 {
-    'L3MON4D3/LuaSnip',
     'VonHeikemen/lsp-zero.nvim',
     'jose-elias-alvarez/null-ls.nvim',
     'nvim-treesitter/nvim-treesitter',
@@ -24,12 +23,25 @@ require("lazy").setup(
                 style = 'dark'
             }
             require('onedark').load()
+            require'nvim-treesitter.configs'.setup {
+              -- ensure_installed = { "c", "cpp", "python", "lua", "markdown", "markdown_inline" },
+              sync_install = false,
+              auto_install = true,
+              highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = false,
+              },
+            }
         end,
     },
     'folke/trouble.nvim',
-    'nvim-telescope/telescope.nvim',
-    'jvgrootveld/telescope-zoxide',
-    'nvim-lua/plenary.nvim',
+    {
+      'nvim-telescope/telescope.nvim',
+      tag = '0.1.8',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+      },
+    },
     {
         'williamboman/mason.nvim',
         config = function()
@@ -39,53 +51,10 @@ require("lazy").setup(
     {
         'williamboman/mason-lspconfig.nvim',
         config = function()
-            require("mason-lspconfig").setup{
-                ensure_installed = {
-                    "lua_ls",
-                    "rust_analyzer",
-                    "clangd",
-                    "pyright",
-                    "pylsp",
-                },
+            require("mason-lspconfig").setup {
+                ensure_installed = { "lua_ls", "clangd", "pyright", "pylsp" },
             }
         end,
-    },
-    {
-        'w0rp/ale',
-        config = function()
-            vim.g.ale_fix_on_save = 1
-            vim.g.ale_linters = {
-                python = {'flake8', 'black'},
-                c = {'clang', 'clangtidy'},
-                cpp = {'clang', 'clangtidy'},
-                bash = {'shellcheck'},
-            }
-            vim.g.ale_fixers = {
-                python = {'black'},
-                c = {'clang-format', 'clangtidy'},
-                cpp = {'clang-format', 'clangtidy'},
-                bash = {'shfmt'},
-            }
-            vim.g.ale_sign_error = '✗'
-            vim.g.ale_sign_warning = '⚠'
-            vim.g.ale_sign_info = 'ℹ'
-            vim.g.ale_sign_style_error = '✗'
-            vim.g.ale_sign_style_warning = '⚠'
-            vim.g.ale_sign_style_info = 'ℹ'
-            vim.g.ale_echo_msg_error_str = '✗'
-            vim.g.ale_echo_msg_warning_str = '⚠'
-            vim.g.ale_echo_msg_info_str = 'ℹ'
-            vim.g.ale_echo_msg_format = '[%linter%] %s [%severity%]'
-            vim.g.ale_lint_on_insert_leave = 1
-            vim.g.ale_lint_on_insert = 0
-            vim.g.ale_lint_on_text_changed = 'never'
-            vim.g.ale_lint_on_enter = 0
-            vim.g.ale_lint_on_filetype_changed = 0
-            vim.g.ale_lint_on_save = 0
-            vim.g.ale_lint_on_cursor_hold = 0
-            vim.g.ale_lint_on_cursor_moved = 0
-            vim.g.ale_lint_on_insert = 0
-        end
     },
     {
         'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -102,7 +71,6 @@ require("lazy").setup(
     },
     'neovim/nvim-lspconfig',
     'onsails/lspkind.nvim',
-    'nvim-tree/nvim-web-devicons',
     'nvim-tree/nvim-tree.lua',
     'folke/todo-comments.nvim',
     {
@@ -112,19 +80,32 @@ require("lazy").setup(
         end,
     },
     'APZelos/blamer.nvim',
-    'nvim-treesitter/nvim-treesitter',
-    'nvim-neotest/neotest-python',
     {
-    'nvim-neotest/neotest',
-    config = function()
-        require("neotest").setup({
-            adapters = {
-                require("neotest-python")({
-                    runner = "pytest",
-                })
-            }
-        })
-    end,
+        'nvim-neotest/neotest',
+        dependencies = {
+            'nvim-neotest/neotest-python',
+            'nvim-neotest/nvim-nio',
+        },
+        config = function()
+            require("neotest").setup({
+                adapters = {
+                    require("neotest-python")({
+                        runner = "pytest",
+                    })
+                }
+            })
+        end,
+    },
+    {
+        'folke/which-key.nvim',
+        tag = 'stable',
+        dependencies = {
+            'kyazdani42/nvim-web-devicons',
+            'echasnovski/mini.icons'
+        },
+        config = function()
+          require("which-key").setup()
+        end,
     },
     {
         'stevearc/oil.nvim',
@@ -133,14 +114,18 @@ require("lazy").setup(
         end,
     },
     {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      init = function()
-        vim.o.timeout = true
-        vim.o.timeoutlen = 300
-      end,
-      opts = {}
+        'numToStr/FTerm.nvim',
+        config = function()
+            require'FTerm'.setup({
+                border = 'double',
+                dimensions  = {
+                    height = 0.9,
+                    width = 0.9,
+                },
+            })
+        end,
     },
+    'nvim-pack/nvim-spectre',
     -- autocompletion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
@@ -154,4 +139,3 @@ require("lazy").setup(
     'theHamsta/nvim-dap-virtual-text',
     'mfussenegger/nvim-dap-python',
 })
-

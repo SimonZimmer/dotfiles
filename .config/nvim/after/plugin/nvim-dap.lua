@@ -70,30 +70,55 @@ vim.keymap.set('n', '<M-K>', dapui_eval, {})
 require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
 
 -- CPP
-require('dap').adapters.lldb = {
-	type = 'executable',
-    command = '/opt/homebrew/opt/llvm/bin/lldb-vscode',
-	name = 'lldb',
+local dap = require('dap')
+dap.set_log_level('DEBUG')
+
+dap.adapters.codelldb = {
+  type = 'server',
+  port = "${port}",
+  executable = {
+    command = "/Users/simonzimmermann/Downloads/codelldb-x86_64-darwin/extension/adapter/codelldb",
+    args = {"--port", "${port}"},
+  }
 }
 
-local lldb = {
-	name = 'Launch lldb',
-	type = 'lldb',
-	request = 'launch',
-	program = function()
-		return vim.fn.input(
-			'Path to executable: ',
-			vim.fn.getcwd() .. '/',
-			'file'
-		)
-	end,
-	cwd = '${workspaceFolder}',
-	stopOnEntry = true,
-	args = {},
-	runInTerminal = false,
+dap.configurations.cpp = {
+      {
+        name = "Launch file",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+            return vim.fn.input('Path to executable: ', '/Applications/', 'file')
+        end,
+        stopAtEntry = true,
+        setupCommands = {
+                {
+                    text = '-enable-pretty-printing',
+                    description = 'enable pretty printing',
+                    ignoreFailures = false,
+                }
+            },
+        runInTerminal = true,
+        },
+      {
+        name = 'Attach to process',
+        type = 'codelldb',
+        request = 'attach',
+        cwd = '${workspaceFolder}',
+        pid = require('dap.utils').pick_process,
+        stopAtEntry = true,
+        setupCommands = {
+                {
+                    text = '-enable-pretty-printing',
+                    description = 'enable pretty printing',
+                    ignoreFailures = false,
+                }
+            },
+        runInTerminal = true,
+        sourcePaths = { '/Users/simonzimmermann/dev/Pd-Externals/source/' },
+        args = {},
+      },
 }
 
-dap.configurations.cpp = { lldb }
+dap.configurations.c = dap.configurations.cpp
 
--- Rust
-dap.configurations.rust = { lldb }

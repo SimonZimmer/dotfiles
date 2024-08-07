@@ -3,7 +3,7 @@
     email = mail@simonzimmermann.de
 
 [merge]
-    tool = vimdiff
+	tool = opendiff
 
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -21,3 +21,5 @@
 
 [difftool "kitty.gui"]
     cmd = kitty kitty +kitten diff $LOCAL $REMOTE
+[core]
+	excludesfile = /Users/simonzimmermann/.config/.gitignore

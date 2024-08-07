@@ -16,6 +16,7 @@ source $ZSH/oh-my-zsh.sh
 eval "$(zoxide init zsh)"
 
 # BASIC defaults export VISUAL=nvim
+export VISUAL=nvim
 export EDITOR="$VISUAL"
 export CPLUS_INCLUDE_PATH=/usr/local/include
 export LIBRARY_PATH=/usr/local/lib
@@ -41,12 +42,22 @@ alias cd="z"
 #PATH
 export PATH="~/.cargo/bin/:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-export LD_LIBRARY_PATH="/Library/Developer/CommandLineTools/usr/lib/:$LD_LIBRARY_PATH"
-export PATH="/usr/local/Cellar/llvm/13.0.1_1/bin/:$PATH"
-export PATH="/usr/local//Cellar/llvm/14.0.6_1/bin/clangd:$PATH"
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-export PATH="/Applications/Pd-0.53-1.app/Contents/MacOS:$PATH"
+export PATH="/usr/local/opt/llvm@12/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/llvm@12/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm@12/include"
+export PKG_CONFIG_PATH="/usr/local/opt/llvm@12/lib/pkgconfig"
 export BAT_THEME="TwoDark"
+export PATH="/Library/Developer/CommandLineTools/usr/bin:$PATH"
+
 
 dotfiles config status.showUntrackedFiles no
 export PATH="/usr/local/opt/llvm/bin:$PATH"
+export DEVPI_URL="http://localhost:8080/root/pypi/+simple/"
+export PATH="/usr/local/opt/curl/bin:$PATH"
+
+# DEVPI
+launchctl load /Library/LaunchDaemons/net.devpi.plist
+launchctl start net.devpi 
+
+# Created by `pipx` on 2024-06-13 10:39:22
+export PATH="$PATH:/Users/simonzimmermann/.local/bin"
