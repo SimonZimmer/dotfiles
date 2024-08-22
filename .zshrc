@@ -1,7 +1,6 @@
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 source ~/.p10k.zsh
-
 # OH MY ZSH
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -54,6 +53,10 @@ dotfiles config status.showUntrackedFiles no
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export DEVPI_URL="http://localhost:8080/root/pypi/+simple/"
 export PATH="/usr/local/opt/curl/bin:$PATH"
+export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
+export CMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk"
+
+
 
 # DEVPI
 launchctl load /Library/LaunchDaemons/net.devpi.plist

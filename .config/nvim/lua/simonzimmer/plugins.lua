@@ -10,12 +10,26 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
+vim.cmd('let $CFLAGS = "-Wno-nullability-completeness"')
 
 require("lazy").setup(
 {
     'VonHeikemen/lsp-zero.nvim',
     'jose-elias-alvarez/null-ls.nvim',
-    'nvim-treesitter/nvim-treesitter',
+    {
+        'nvim-treesitter/nvim-treesitter',
+        tag = 'v0.9.2',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+              sync_install = false,
+              auto_install = false,
+              highlight = {
+                enable = true,
+                additional_vim_regex_highlighting = true,
+              },
+            }
+        end
+    },
     {
         'navarasu/onedark.nvim',
         config = function()
@@ -23,18 +37,8 @@ require("lazy").setup(
                 style = 'dark'
             }
             require('onedark').load()
-            require'nvim-treesitter.configs'.setup {
-              -- ensure_installed = { "c", "cpp", "python", "lua", "markdown", "markdown_inline" },
-              sync_install = false,
-              auto_install = true,
-              highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-              },
-            }
-        end,
-    },
-    'folke/trouble.nvim',
+        end
+    },    'folke/trouble.nvim',
     {
       'nvim-telescope/telescope.nvim',
       tag = '0.1.8',
@@ -124,6 +128,22 @@ require("lazy").setup(
                 },
             })
         end,
+    },
+    {
+        "kdheepak/lazygit.nvim",
+        cmd = {
+            "LazyGit",
+            "LazyGitConfig",
+            "LazyGitCurrentFile",
+            "LazyGitFilter",
+            "LazyGitFilterCurrentFile",
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        keys = {
+            { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+        }
     },
     'nvim-pack/nvim-spectre',
     -- autocompletion
