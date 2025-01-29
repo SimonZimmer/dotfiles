@@ -103,29 +103,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 -- Function to run clang-format on buffer write
 local function format_with_clang()
-  -- Dynamically search for the .clang-format file
-  local clang_format_path = vim.fn.glob("/Users/simonzimmermann/.conan/data/drClangFormat/2012/_/_/package/**/.clang-format")
-
-  -- Validate the file exists
+  local clang_format_path = vim.fn.glob("/Users/simonzimmermann/.config/**/.clang-format")
   if clang_format_path == "" then
     vim.notify("Error: .clang-format file not found", vim.log.levels.ERROR)
     return
   end
-
   -- Construct clang-format command
   local clang_format_cmd = "clang-format -i --style=file:" .. clang_format_path
-  local file_path = vim.fn.expand("%:p") -- Get the absolute file path of the current buffer
+  local file_path = vim.fn.expand("%:p")
   local cmd = clang_format_cmd .. " " .. file_path
 
-  -- Execute the command and check for errors
   local result = vim.fn.system(cmd)
   if vim.v.shell_error ~= 0 then
     vim.notify("Error running clang-format: " .. result, vim.log.levels.ERROR)
     return
   end
-
   -- Reload the buffer to reflect the changes made by clang-format
-  vim.cmd("checktime") -- Check if the file has been changed on disk and reload
+  vim.cmd("checktime")
 end
 
 vim.api.nvim_create_augroup("ClangFormatOnSave", { clear = true })
