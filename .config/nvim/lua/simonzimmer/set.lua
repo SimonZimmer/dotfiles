@@ -22,3 +22,5 @@ vim.g.noswapfile = true
 vim.opt.laststatus = 0
 
 vim.api.nvim_set_keymap('x', 'p', 'pgvy', { noremap = true, silent = true })
+
+pcall(vim.api.nvim_del_keymap, "i", "<Space>h")

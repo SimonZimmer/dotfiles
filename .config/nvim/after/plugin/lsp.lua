@@ -1,9 +1,12 @@
 local lsp = require('lsp-zero')
-lsp.preset('recommended')
 
 -- Python
 vim.g.python_host_prog = '/usr/local/bin/python'
 vim.g.python3_host_prog = '~/.virtualenvs/neovim/bin/python'
+lsp.on_attach(function(client, bufnr)
+    -- Remove the <Space>h mapping in insert mode
+    vim.api.nvim_buf_del_keymap(bufnr, "i", "<Space>h")
+end)
 
 -- CPP
 require'lspconfig'.clangd.setup{}
@@ -71,8 +74,6 @@ require('lspconfig')['pylsp'].setup {
   capabilities = capabilities
 }
 
-require'lspconfig'.pyright.setup{}
-
 local lspkind = require('lspkind')
 cmp.setup {
   formatting = {
@@ -90,4 +91,46 @@ vim.diagnostic.config({
   underline = true,
   update_in_insert = true,
   severity_sort = false,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+        local bufnr = args.buf
+        -- Remove <Space>h in insert mode for all LSPs
+        vim.api.nvim_buf_del_keymap(bufnr, "i", "<Space>h")
+    end,
+})
+
+-- Function to run clang-format on buffer write
+local function format_with_clang()
+  -- Dynamically search for the .clang-format file
+  local clang_format_path = vim.fn.glob("/Users/simonzimmermann/.conan/data/drClangFormat/2012/_/_/package/**/.clang-format")
+
+  -- Validate the file exists
+  if clang_format_path == "" then
+    vim.notify("Error: .clang-format file not found", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Construct clang-format command
+  local clang_format_cmd = "clang-format -i --style=file:" .. clang_format_path
+  local file_path = vim.fn.expand("%:p") -- Get the absolute file path of the current buffer
+  local cmd = clang_format_cmd .. " " .. file_path
+
+  -- Execute the command and check for errors
+  local result = vim.fn.system(cmd)
+  if vim.v.shell_error ~= 0 then
+    vim.notify("Error running clang-format: " .. result, vim.log.levels.ERROR)
+    return
+  end
+
+  -- Reload the buffer to reflect the changes made by clang-format
+  vim.cmd("checktime") -- Check if the file has been changed on disk and reload
+end
+
+vim.api.nvim_create_augroup("ClangFormatOnSave", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = "ClangFormatOnSave",
+  pattern = { "*.h", "*.cpp", "*.c" },
+  callback = format_with_clang,
 })

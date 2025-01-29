@@ -56,7 +56,7 @@ require("lazy").setup(
         'williamboman/mason-lspconfig.nvim',
         config = function()
             require("mason-lspconfig").setup {
-                ensure_installed = { "lua_ls", "clangd", "pyright", "pylsp" },
+                ensure_installed = { "lua_ls", "clangd", "pylsp" },
             }
         end,
     },
@@ -67,7 +67,6 @@ require("lazy").setup(
                 ensure_installed = {
                   'cmake-language-server',
                   'lua-language-server',
-                  'bash-language-server',
                 },
                 auto_update = true,
             }
@@ -152,10 +151,10 @@ require("lazy").setup(
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',
-    'github/copilot.vim',
     -- debugging
     'mfussenegger/nvim-dap',
     'rcarriga/nvim-dap-ui',
     'theHamsta/nvim-dap-virtual-text',
     'mfussenegger/nvim-dap-python',
+    'github/copilot.vim'
 })
