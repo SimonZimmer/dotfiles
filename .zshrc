@@ -1,7 +1,5 @@
 # Powerlevel10k Configuration
-POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
-source ~/.p10k.zsh
-ZSH_THEME="powerlevel10k/powerlevel10k"
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true source ~/.p10k.zsh
 
 # Oh My Zsh Configuration
 export ZSH="$HOME/.oh-my-zsh"
@@ -34,6 +32,9 @@ alias l='exa -lbF --git'
 alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 alias kitdiff="git difftool --no-symlinks --dir-diff"
+alias k='kubectl'
+alias tf='terraform'
+alias tg='terragrunt'
 
 # Additional PATHs
 export PATH="/usr/local/sbin:$PATH"
@@ -57,7 +58,33 @@ export CMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/M
 # Git Configuration
 dotfiles config status.showUntrackedFiles no
 
-# Zsh Syntax Highlighting
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 touch ~/.hushlogin
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+
+
+# kuse - A function to switch between kubeconfigs
+kuse() {
+  local CONFIG_PATH="$HOME/.kube/configs/$1.yaml"
+
+  if [ ! -f "$CONFIG_PATH" ]; then
+    echo "❌ Kubeconfig '$1' not found at $CONFIG_PATH"
+    return 1
+  fi
+
+  export KUBECONFIG="$CONFIG_PATH"
+  export K9S_KUBECONFIG="$CONFIG_PATH"
+
+  echo "✅ Switched to kubeconfig: $CONFIG_PATH"
+  kubectl config get-contexts
+}
+
+# Autocompletion function
+_kuse_completions() {
+  local cur_word
+  cur_word="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=( $(compgen -W "$(basename -s .yaml ~/.kube/configs/*.yaml 2>/dev/null)" -- "$cur_word")
+ )
+}
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/simonzimmermann/.rd/bin:$PATH"

@@ -1,3 +1,4 @@
-require("simonzimmer.remap")
-require("simonzimmer.set")
-require("simonzimmer.plugins")
+require("simonzimmer.options")
+require("simonzimmer.keymaps")
+require("simonzimmer.lazy")
+require("simonzimmer.autocmds")
