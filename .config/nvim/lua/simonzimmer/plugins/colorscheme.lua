@@ -8,5 +8,8 @@ return {
     }
     require('onedark').load()
     vim.cmd.colorscheme("onedark")
+
+    vim.api.nvim_set_hl(0, "NvimTreeNormal", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { link = "Normal" })
   end
 }

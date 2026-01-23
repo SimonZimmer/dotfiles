@@ -20,3 +20,6 @@ vim.opt.clipboard = 'unnamedplus'
 vim.opt.swapfile = false
 
 vim.opt.laststatus = 3
+
+vim.opt.timeoutlen = 300
+vim.opt.ttimeoutlen = 10

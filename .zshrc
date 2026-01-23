@@ -1,8 +1,9 @@
 # Oh My Zsh Configuration
 export ZSH="$HOME/.oh-my-zsh"
-ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git docker)
 source $ZSH/oh-my-zsh.sh
+source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+unset zle_bracketed_paste
 
 # Powerlevel10k Configuration
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -94,3 +95,5 @@ alias pip='/opt/homebrew/opt/python@3.13/libexec/bin/pip3'
 alias pip3='/opt/homebrew/opt/python@3.13/libexec/bin/pip3'
 
 export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin
+# Reduce key timeout to prevent character swallowing
+KEYTIMEOUT=1
