@@ -15,22 +15,6 @@ return {
     config = function()
       require("mason-lspconfig").setup {
         ensure_installed = { "lua_ls", "clangd", "pylsp", "azure_pipelines_ls", "yamlls", "helm_ls" },
-        handlers = {
-          lua_ls = function()
-            require('lspconfig').lua_ls.setup({
-              settings = {
-                Lua = {
-                  runtime = { version = 'LuaJIT' },
-                  workspace = {
-                    checkThirdParty = false,
-                    library = { vim.env.VIMRUNTIME },
-                  },
-                  diagnostics = { globals = { 'vim' } },
-                },
-              },
-            })
-          end,
-        },
       }
     end,
   },
@@ -56,6 +40,19 @@ return {
     event = { "BufReadPre", "BufNewFile" },
     config = function()
       local lsp = require('lsp-zero')
+
+      vim.lsp.config.lua_ls = {
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            workspace = {
+              checkThirdParty = false,
+              library = { vim.env.VIMRUNTIME },
+            },
+            diagnostics = { globals = { 'vim' } },
+          },
+        },
+      }
 
       vim.lsp.config.clangd = {}
       vim.lsp.enable('clangd')
@@ -105,8 +102,15 @@ return {
         vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, opts)
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-        vim.keymap.set("i", "<leader>h", vim.lsp.buf.signature_help, opts)
-        vim.keymap.set("n", '<leader>gh', '<cmd>ClangdSwitchSourceHeader<cr>')
+        vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+        vim.keymap.set("n", '<leader>gh', function()
+          local params = { uri = vim.uri_from_bufnr(0) }
+          vim.lsp.buf_request(0, 'textDocument/switchSourceHeader', params, function(err, result)
+            if result then
+              vim.cmd('edit ' .. vim.uri_to_fname(result))
+            end
+          end)
+        end, opts)
       end)
 
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -127,12 +131,6 @@ return {
         severity_sort = false,
       })
 
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function(args)
-          local bufnr = args.buf
-          pcall(vim.api.nvim_buf_del_keymap, bufnr, "i", "<Space>h")
-        end,
-      })
 
       local function format_with_clang()
         local clang_format_path = vim.fn.glob(vim.fn.expand("~/.config") .. "/**/.clang-format")

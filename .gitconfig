@@ -3,7 +3,7 @@
     email = mail@simonzimmermann.de
 
 [merge]
-	tool = opendiff
+	tool = vimdiff
 
 [alias]
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
@@ -28,3 +28,5 @@
 	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
+[mergetool]
+	prompt = false

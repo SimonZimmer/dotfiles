@@ -1,10 +1,11 @@
-# Powerlevel10k Configuration
-POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true source ~/.p10k.zsh
-
 # Oh My Zsh Configuration
 export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git docker)
 source $ZSH/oh-my-zsh.sh
+
+# Powerlevel10k Configuration
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Editor Configuration
 export VISUAL=nvim
@@ -58,8 +59,7 @@ export CMAKE_OSX_SYSROOT="/Applications/Xcode.app/Contents/Developer/Platforms/M
 # Git Configuration
 dotfiles config status.showUntrackedFiles no
 
-touch ~/.hushlogin
-source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
+#touch ~/.hushlogin
 
 
 # kuse - A function to switch between kubeconfigs
@@ -88,3 +88,9 @@ _kuse_completions() {
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/simonzimmermann/.rd/bin:$PATH"
+alias python='/opt/homebrew/opt/python@3.13/libexec/bin/python3'
+alias python3='/opt/homebrew/opt/python@3.13/libexec/bin/python3'
+alias pip='/opt/homebrew/opt/python@3.13/libexec/bin/pip3'
+alias pip3='/opt/homebrew/opt/python@3.13/libexec/bin/pip3'
+
+export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin

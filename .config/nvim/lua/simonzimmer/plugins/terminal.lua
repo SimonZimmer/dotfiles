@@ -1,14 +1,18 @@
 return {
   'akinsho/toggleterm.nvim',
   version = "*",
-  keys = { "<c-\\>" },
+  keys = {
+    { "<leader>tt", "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
+  },
   cmd = { "ToggleTerm" },
   config = function()
     require("toggleterm").setup{
-      size = 20,
-      open_mapping = [[<c-\>]],
-      direction = 'horizontal',
+      open_mapping = [[<leader>tt]],
+      direction = 'float',
       close_on_exit = true,
+      float_opts = {
+        border = 'curved',
+      },
     }
 
     vim.api.nvim_create_user_command('KustomizeBuild',

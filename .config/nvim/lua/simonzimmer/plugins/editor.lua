@@ -32,7 +32,7 @@ return {
     'nvim-tree/nvim-tree.lua',
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     keys = {
-      { "<leader>e", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file tree" },
+      { "<leader>tr", "<cmd>NvimTreeToggle<cr>", desc = "Toggle file tree" },
     },
     config = function()
       require('nvim-tree').setup({
@@ -59,8 +59,9 @@ return {
           ignore = false,
         },
       })
-      vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = 'NONE' })
-      vim.api.nvim_set_hl(0, 'NvimTreeEndOfBuffer', { bg = 'NONE' })
+      local normal_bg = vim.api.nvim_get_hl(0, { name = 'Normal' }).bg
+      vim.api.nvim_set_hl(0, 'NvimTreeNormal', { bg = normal_bg })
+      vim.api.nvim_set_hl(0, 'NvimTreeEndOfBuffer', { bg = normal_bg })
     end,
   },
 
