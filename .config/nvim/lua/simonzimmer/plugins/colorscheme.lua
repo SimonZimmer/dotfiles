@@ -1,13 +1,12 @@
 return {
-  'navarasu/onedark.nvim',
+  'folke/tokyonight.nvim',
   lazy = false,
   priority = 1000,
   config = function()
-    require('onedark').setup {
-      style = 'dark'
+    require('tokyonight').setup {
+      style = 'night'
     }
-    require('onedark').load()
-    vim.cmd.colorscheme("onedark")
+    vim.cmd.colorscheme("tokyonight")
 
     vim.api.nvim_set_hl(0, "NvimTreeNormal", { link = "Normal" })
     vim.api.nvim_set_hl(0, "NvimTreeNormalNC", { link = "Normal" })
