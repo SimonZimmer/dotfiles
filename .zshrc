@@ -1,6 +1,6 @@
 # Oh My Zsh Configuration
 export ZSH="$HOME/.oh-my-zsh"
-plugins=(git docker)
+plugins=(git docker zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 unset zle_bracketed_paste

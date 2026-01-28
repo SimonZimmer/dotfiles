@@ -29,6 +29,8 @@ return {
           'cmake-language-server',
           'lua-language-server',
           'yamllint',
+          'actionlint',
+          'kube-linter',
         },
         auto_update = true,
       }
@@ -38,6 +40,7 @@ return {
   {
     'neovim/nvim-lspconfig',
     event = { "BufReadPre", "BufNewFile" },
+    dependencies = { 'b0o/schemastore.nvim' },
     config = function()
       local lsp = require('lsp-zero')
 
@@ -63,12 +66,11 @@ return {
         root_dir = vim.fs.root(0, {'.git', '.'}),
         settings = {
           yaml = {
-            schemas = {
-              kubernetes = "*.yaml",
-              ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-              ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-              ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+            schemaStore = {
+              enable = false,
+              url = "",
             },
+            schemas = require('schemastore').yaml.schemas(),
           },
         }
       }
@@ -77,7 +79,9 @@ return {
       vim.lsp.config.helm_ls = {
         cmd = { 'helm_ls', 'serve' },
         filetypes = { 'helm' },
-        root_dir = vim.fs.root(0, {'.git', '.'}),
+        root_dir = function(fname)
+          return require('lspconfig.util').root_pattern('Chart.yaml')(fname) or vim.fs.root(fname, {'.git', '.'})
+        end,
         settings = {
           ['helm-ls'] = {
             yamlls = {
@@ -164,11 +168,23 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require('lint').linters_by_ft = {
-        yaml = {'yamllint'},
+        yaml = {'yamllint', 'kube-linter'},
+        helm = {'yamllint'},
       }
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+
+      local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
+
+      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave", "TextChanged" }, {
+        group = lint_augroup,
         callback = function()
-          require("lint").try_lint()
+          local lint = require("lint")
+          if vim.bo.filetype == "yaml" then
+            if vim.fn.expand("%:p"):match(".github/workflows/") then
+              lint.try_lint("actionlint")
+            end
+            lint.try_lint("kube-linter")
+          end
+          lint.try_lint()
         end,
       })
     end,
