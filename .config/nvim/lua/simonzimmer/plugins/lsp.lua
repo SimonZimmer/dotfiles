@@ -14,7 +14,7 @@ return {
     dependencies = { 'williamboman/mason.nvim' },
     config = function()
       require("mason-lspconfig").setup {
-        ensure_installed = { "lua_ls", "clangd", "pylsp", "azure_pipelines_ls", "yamlls", "helm_ls" },
+        ensure_installed = { "lua_ls", "clangd", "pylsp", "azure_pipelines_ls", "yamlls", "helm_ls", "gopls" },
       }
     end,
   },
@@ -30,9 +30,9 @@ return {
           'lua-language-server',
           'yamllint',
           'actionlint',
-          'kube-linter',
+          'golangci-lint',
         },
-        auto_update = true,
+        auto_update = false,
       }
     end,
   },
@@ -127,6 +127,22 @@ return {
       }
       vim.lsp.enable('pylsp')
 
+      vim.lsp.config.gopls = {
+        cmd = { "gopls" },
+        filetypes = { "go", "gomod", "gowork", "gotmpl" },
+        root_dir = vim.fs.root(0, { "go.work", "go.mod", ".git" }),
+        settings = {
+          gopls = {
+            completeUnimported = true,
+            usePlaceholders = true,
+            analyses = {
+              unusedparams = true,
+            },
+          },
+        },
+      }
+      vim.lsp.enable('gopls')
+
       vim.diagnostic.config({
         virtual_text = true,
         signs = true,
@@ -168,8 +184,9 @@ return {
     event = { "BufReadPost", "BufNewFile" },
     config = function()
       require('lint').linters_by_ft = {
-        yaml = {'yamllint', 'kube-linter'},
+        yaml = {'yamllint'},
         helm = {'yamllint'},
+        go = {'golangcilint'},
       }
 
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -182,7 +199,6 @@ return {
             if vim.fn.expand("%:p"):match(".github/workflows/") then
               lint.try_lint("actionlint")
             end
-            lint.try_lint("kube-linter")
           end
           lint.try_lint()
         end,

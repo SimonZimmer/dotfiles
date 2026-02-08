@@ -13,6 +13,9 @@ return {
     local cmp = require'cmp'
 
     cmp.setup({
+      enabled = function()
+        return vim.bo.buftype ~= "terminal"
+      end,
       window = {
       },
       mapping = cmp.mapping.preset.insert({

@@ -1,20 +1,25 @@
 return {
-  'akinsho/toggleterm.nvim',
-  version = "*",
-  keys = {
-    { "<leader>tt", "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" },
-  },
-  cmd = { "ToggleTerm" },
-  config = function()
-    require("toggleterm").setup{
-      open_mapping = [[<leader>tt]],
-      direction = 'float',
-      close_on_exit = true,
-      float_opts = {
-        border = 'curved',
+  "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
+  opts = {
+    terminal = {
+      enabled = true,
+      win = {
+        style = "float",
+        border = "rounded",
+        wo = {
+          winbar = "",
+          statuscolumn = "",
+          signcolumn = "no",
+        },
       },
-    }
-
+    },
+  },
+  keys = {
+    { "<leader>tt", function() Snacks.terminal.toggle() end, desc = "Toggle Terminal", mode = { "n", "t" } },
+  },
+  init = function()
     vim.api.nvim_create_user_command('KustomizeBuild',
       function()
         vim.cmd('split | term kustomize build --load-restrictor=LoadRestrictionsNone %:p:h')

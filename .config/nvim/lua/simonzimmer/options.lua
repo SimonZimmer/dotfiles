@@ -23,3 +23,8 @@ vim.opt.laststatus = 3
 
 vim.opt.timeoutlen = 300
 vim.opt.ttimeoutlen = 10
+
+vim.opt.autoread = true
+vim.opt.mouse = 'a'
+
+vim.lsp.set_log_level("off")

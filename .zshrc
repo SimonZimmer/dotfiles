@@ -1,6 +1,6 @@
 # Oh My Zsh Configuration
 export ZSH="$HOME/.oh-my-zsh"
-plugins=(git docker zsh-syntax-highlighting)
+if [[ -n "$NVIM" ]]; then plugins=(git docker); else plugins=(git docker zsh-syntax-highlighting); fi
 source $ZSH/oh-my-zsh.sh
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 unset zle_bracketed_paste
@@ -13,7 +13,7 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 
 # Environment Variables
-export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
 export CPLUS_INCLUDE_PATH="/usr/local/include"
 export LIBRARY_PATH="/usr/local/lib"
 export DEFAULT_USER="$(whoami)"
@@ -33,17 +33,15 @@ alias git_rinse="git clean -xfd || true && \
 alias l='exa -lbF --git'
 alias la='exa -lbhHigUmuSa --time-style=long-iso --git --color-scale'
 alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
-alias kitdiff="git difftool --no-symlinks --dir-diff"
 alias k='kubectl'
 alias tf='terraform'
 alias tg='terragrunt'
 
 # Additional PATHs
-export PATH="/usr/local/sbin:$PATH"
-export PATH="/Library/Developer/CommandLineTools/usr/bin:$PATH"
-export PATH="/Library/Developer/CommandLineTools/:$PATH"
+export PATH="$PATH:/Library/Developer/CommandLineTools/usr/bin"
+export PATH="$PATH:/Library/Developer/CommandLineTools/"
 export PATH="$PATH:/Users/simonzimmermann/.local/bin"
-export PATH="$PATH:/Users/simonzimmermann/Library/Python/3.9/bin"
+export PATH="$PATH:/Users/simonzimmermann/Library/Python/3.14/bin"
 export PATH="$PATH:/opt/homebrew/bin/black"
 
 # LLVM and Development Flags
@@ -87,13 +85,46 @@ _kuse_completions() {
  )
 }
 
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/simonzimmermann/.rd/bin:$PATH"
-alias python='/opt/homebrew/opt/python@3.13/libexec/bin/python3'
-alias python3='/opt/homebrew/opt/python@3.13/libexec/bin/python3'
-alias pip='/opt/homebrew/opt/python@3.13/libexec/bin/pip3'
-alias pip3='/opt/homebrew/opt/python@3.13/libexec/bin/pip3'
-
 export STM32_PRG_PATH=/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin
 # Reduce key timeout to prevent character swallowing
 KEYTIMEOUT=1
+alias cat='bat'
+
+unalias kitdiff 2>/dev/nullkitdiff() {
+    if [[ $# -eq 2 ]] && [[ -e "$1" ]] && [[ -e "$2" ]]; then
+        kitty +kitten diff "$1" "$2"
+    else
+        git difftool --no-symlinks --dir-diff "$@"
+    fi
+}
+
+# Fix for Neovim terminal input issues
+if [[ -n "$NVIM" ]]; then
+  export KEYTIMEOUT=20
+fi
+
+# Disable Zsh Autosuggestions in Neovim to fix cursor jumping/swallowing
+if [[ -n "$NVIM" ]]; then
+  export ZSH_AUTOSUGGEST_STRATEGY=none
+  unset ZSH_AUTOSUGGEST_USE_ASYNC
+fi
+
+# Fix Powerlevel10k rendering in Neovim (remove ambiguous icons)
+if [[ -n "$NVIM" ]]; then
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_CONTENT_EXPANSION='>'
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_CONTENT_EXPANSION='>'
+  typeset -g POWERLEVEL9K_VCS_GIT_ICON=''
+  typeset -g POWERLEVEL9K_VCS_BRANCH_ICON=''
+  typeset -g POWERLEVEL9K_VCS_COMMIT_ICON=''
+  typeset -g POWERLEVEL9K_VCS_REMOTE_BRANCH_ICON=''
+  typeset -g POWERLEVEL9K_VCS_TAG_ICON=''
+  typeset -g POWERLEVEL9K_VCS_STAGED_ICON='+'
+  typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON='!'
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
+  typeset -g POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='<'
+  typeset -g POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='>'
+  typeset -g POWERLEVEL9K_DIR_ICON=''
+  typeset -g POWERLEVEL9K_STATUS_OK_ICON=''
+  typeset -g POWERLEVEL9K_STATUS_ERROR_ICON='x'
+  typeset -g POWERLEVEL9K_EXECUTION_TIME_ICON=''
+fi
