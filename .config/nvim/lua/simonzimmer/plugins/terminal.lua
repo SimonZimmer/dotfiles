@@ -3,21 +3,31 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
-    terminal = {
-      enabled = true,
-      win = {
-        style = "float",
+    styles = {
+      terminal = {
         border = "rounded",
+        width = 0.8,
+        height = 0.8,
         wo = {
-          winbar = "",
-          statuscolumn = "",
-          signcolumn = "no",
+          winhighlight = "Normal:SnacksNormal,NormalNC:SnacksNormalNC,WinBar:SnacksWinBar,WinBarNC:SnacksWinBarNC,FloatBorder:SnacksWinBorder,FloatTitle:SnacksWinBorder",
         },
       },
     },
   },
   keys = {
-    { "<leader>tt", function() Snacks.terminal.toggle() end, desc = "Toggle Terminal", mode = { "n", "t" } },
+    { 
+      "<leader>tt", 
+      function() 
+        Snacks.terminal(nil, { 
+          env = { 
+            NVIM_TERMINAL = "1",
+            TERM = "xterm-256color",
+          } 
+        }) 
+      end, 
+      desc = "Toggle Terminal", 
+      mode = { "n", "t" } 
+    },
   },
   init = function()
     vim.api.nvim_create_user_command('KustomizeBuild',

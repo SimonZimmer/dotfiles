@@ -14,7 +14,7 @@ return {
     dependencies = { 'williamboman/mason.nvim' },
     config = function()
       require("mason-lspconfig").setup {
-        ensure_installed = { "lua_ls", "clangd", "pylsp", "azure_pipelines_ls", "yamlls", "helm_ls", "gopls" },
+        ensure_installed = { "lua_ls", "clangd", "pylsp", "yamlls", "helm_ls", "gopls" },
       }
     end,
   },
@@ -43,8 +43,20 @@ return {
     dependencies = { 'b0o/schemastore.nvim' },
     config = function()
       local lsp = require('lsp-zero')
+      local util = require('lspconfig.util')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-      vim.lsp.config.lua_ls = {
+      local function get_root_dir(bufnr)
+        local fname = vim.api.nvim_buf_get_name(bufnr)
+        if not fname or fname == "" or fname:find("^oil://") then
+          return nil
+        end
+        return util.root_pattern(".git", "Chart.yaml", "setup.py", "pyproject.toml", "go.mod")(fname) 
+          or util.path.dirname(fname)
+      end
+
+      vim.lsp.config('lua_ls', {
+        capabilities = capabilities,
         settings = {
           Lua = {
             runtime = { version = 'LuaJIT' },
@@ -55,33 +67,35 @@ return {
             diagnostics = { globals = { 'vim' } },
           },
         },
-      }
+      })
+      vim.lsp.enable('lua_ls')
 
-      vim.lsp.config.clangd = {}
+      vim.lsp.config('clangd', { capabilities = capabilities })
       vim.lsp.enable('clangd')
 
-      vim.lsp.config.yamlls = {
-        cmd = { 'yaml-language-server', '--stdio' },
+      vim.lsp.config('yamlls', {
+        capabilities = capabilities,
         filetypes = { 'yaml', 'yaml.docker-compose', 'yaml.gitlab' },
-        root_dir = vim.fs.root(0, {'.git', '.'}),
+        root_dir = get_root_dir,
         settings = {
           yaml = {
             schemaStore = {
-              enable = false,
-              url = "",
+              enable = true,
+              url = "https://www.schemastore.org/api/json/catalog.json",
             },
             schemas = require('schemastore').yaml.schemas(),
+            validate = false, -- Disables internal validation to allow aligned hyphens
           },
         }
-      }
+      })
       vim.lsp.enable('yamlls')
 
-      vim.lsp.config.helm_ls = {
-        cmd = { 'helm_ls', 'serve' },
-        filetypes = { 'helm' },
-        root_dir = function(fname)
-          return require('lspconfig.util').root_pattern('Chart.yaml')(fname) or vim.fs.root(fname, {'.git', '.'})
+      vim.lsp.config('helm_ls', {
+        capabilities = capabilities,
+        root_dir = function(bufnr)
+          return util.root_pattern('Chart.yaml', '.git')(vim.api.nvim_buf_get_name(bufnr))
         end,
+        workspace_required = true,
         settings = {
           ['helm-ls'] = {
             yamlls = {
@@ -89,7 +103,7 @@ return {
             }
           }
         }
-      }
+      })
       vim.lsp.enable('helm_ls')
 
       lsp.on_attach(function(client, bufnr)
@@ -117,20 +131,15 @@ return {
         end, opts)
       end)
 
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      vim.lsp.config.pylsp = {
-        cmd = { 'pylsp' },
-        filetypes = { 'python' },
-        root_dir = vim.fs.root(0, {'.git', 'setup.py', 'pyproject.toml', '.'}),
-        capabilities = capabilities
-      }
+      vim.lsp.config('pylsp', {
+        capabilities = capabilities,
+        root_dir = get_root_dir,
+      })
       vim.lsp.enable('pylsp')
 
-      vim.lsp.config.gopls = {
-        cmd = { "gopls" },
-        filetypes = { "go", "gomod", "gowork", "gotmpl" },
-        root_dir = vim.fs.root(0, { "go.work", "go.mod", ".git" }),
+      vim.lsp.config('gopls', {
+        capabilities = capabilities,
+        root_dir = get_root_dir,
         settings = {
           gopls = {
             completeUnimported = true,
@@ -140,7 +149,7 @@ return {
             },
           },
         },
-      }
+      })
       vim.lsp.enable('gopls')
 
       vim.diagnostic.config({
