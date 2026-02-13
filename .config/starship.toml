@@ -7,7 +7,6 @@ disabled = false
 format = '[$symbol($subscription)]($style) '
 symbol = '󰠅 '
 style = 'blue bold'
-align = 'right'
 
 [kubernetes]
 format = '[⎈ ($context)]($style) '
