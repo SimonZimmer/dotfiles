@@ -27,4 +27,9 @@ vim.opt.ttimeoutlen = 10
 vim.opt.autoread = true
 vim.opt.mouse = 'a'
 
-vim.lsp.set_log_level("off")
+vim.lsp.log.set_level("off")
+
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0

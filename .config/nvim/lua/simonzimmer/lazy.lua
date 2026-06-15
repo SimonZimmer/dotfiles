@@ -19,4 +19,15 @@ require("lazy").setup({
   spec = {
     { import = "simonzimmer.plugins" },
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
+    },
+  },
 })

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "plugin": [
+    "./plugins/graphify-context/plugin.js"
+  ],
+  "provider": {
+    "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
+      "models": {
+        "qwen3:32b": {
+          "tools": true
+        }
+      }
+    }
+  },
+  "command": {
+    "graphify": {
+      "description": "Turn current directory into a navigable knowledge graph",
+      "template": "The user invoked /graphify. Load the graphify skill and execute the full graphify pipeline on the current directory."
+    }
+  },
+  "agent": {
+    "nvim-maintainer": {
+      "description": "Adjusts nvim config",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-20250514",
+      "prompt": "You are a neovim maintainer. Focus on editing the custom nvim config located at ~/.config/nvim.",
+      "tools": {
+        "write": true,
+        "edit": false
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 return {
   {
     'nvim-lualine/lualine.nvim',
+    event = "VeryLazy",
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('lualine').setup {
@@ -32,8 +33,11 @@ return {
     },
     config = function()
       local wk = require("which-key")
-      wk.setup()
+      wk.setup({
+        notify = false,
+      })
       wk.add({
+        { "gc", group = "Comments" },
         { "-", "<cmd>Oil<cr>", desc = "Oil" },
         { "<leader>S", "<cmd>lua require('spectre').toggle()<CR>", desc = "Spectre Toggle" },
         { "<leader>b", "<cmd>BlamerToggle<cr>", desc = "Blamer Toggle" },

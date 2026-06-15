@@ -3,6 +3,35 @@ return {
   priority = 1000,
   lazy = false,
   opts = {
+    image = { enabled = true },
+    input = { enabled = true },
+    notifier = { enabled = true },
+    picker = {
+      enabled = true,
+      ui_select = true,
+    },
+    bigfile = { enabled = true },
+    dashboard = { 
+      enabled = true,
+      preset = {
+        keys = {
+          { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
+          { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
+          { icon = " ", key = "s", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
+          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+          { icon = " ", key = "S", desc = "Restore Session", section = "session" },
+          { icon = "󰒲 ", key = "L", desc = "Lazy", action = ":Lazy", enabled = package.loaded.lazy ~= nil },
+          { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+        },
+      },
+    },
+    explorer = { enabled = true },
+    quickfile = { enabled = true },
+    scope = { enabled = true },
+    scroll = { enabled = true },
+    statuscolumn = { enabled = true },
+    words = { enabled = true },
     styles = {
       terminal = {
         border = "rounded",
@@ -18,7 +47,33 @@ return {
     { 
       "<leader>tt", 
       function() 
-        Snacks.terminal(nil, { 
+        Snacks.terminal.toggle(nil, { 
+          env = { 
+            NVIM_TERMINAL = "1",
+            TERM = "xterm-256color",
+          } 
+        }) 
+      end, 
+      desc = "Toggle Terminal", 
+      mode = { "n", "t" },
+    },
+    { 
+      "<C-/>", 
+      function() 
+        Snacks.terminal.toggle(nil, { 
+          env = { 
+            NVIM_TERMINAL = "1",
+            TERM = "xterm-256color",
+          } 
+        }) 
+      end, 
+      desc = "Toggle Terminal", 
+      mode = { "n", "t" } 
+    },
+    { 
+      "<C-_>", 
+      function() 
+        Snacks.terminal.toggle(nil, { 
           env = { 
             NVIM_TERMINAL = "1",
             TERM = "xterm-256color",

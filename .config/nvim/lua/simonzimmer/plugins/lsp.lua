@@ -3,6 +3,7 @@ return {
 
   {
     'williamboman/mason.nvim',
+    cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
     config = function()
       require('mason').setup()
     end,
@@ -15,6 +16,7 @@ return {
     config = function()
       require("mason-lspconfig").setup {
         ensure_installed = { "lua_ls", "clangd", "pylsp", "yamlls", "helm_ls", "gopls" },
+        automatic_enable = false,
       }
     end,
   },
@@ -161,8 +163,9 @@ return {
       })
 
 
+      local clang_format_path = vim.fn.glob(vim.fn.expand("~/.config") .. "/**/.clang-format")
+
       local function format_with_clang()
-        local clang_format_path = vim.fn.glob(vim.fn.expand("~/.config") .. "/**/.clang-format")
         if clang_format_path == "" then
           vim.notify("Error: .clang-format file not found", vim.log.levels.ERROR)
           return
@@ -200,7 +203,7 @@ return {
 
       local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
-      vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave", "TextChanged" }, {
+      vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
         group = lint_augroup,
         callback = function()
           local lint = require("lint")

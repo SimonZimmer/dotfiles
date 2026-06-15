@@ -1,6 +1,11 @@
-format = '$all$directory$character'
+add_newline = false
+format = '$directory$git_branch$git_status$character'
 
 right_format = "$azure$cmd_duration$time$battery$kubernetes"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = 'red bold'
 
 [azure]
 disabled = false
@@ -11,12 +16,12 @@ style = 'blue bold'
 [kubernetes]
 format = '[⎈ ($context)]($style) '
 disabled = false
-contexts = [
-  { context_pattern = "dev.local.cluster.k8s", style = "green", symbol = "💔 " },
-]
 
 [line_break]
 disabled = true
 
 [git_branch]
 format = '[$symbol$branch(:$remote_branch)]($style) '
+
+[terraform]
+disabled = true
