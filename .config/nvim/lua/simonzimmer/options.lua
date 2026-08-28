@@ -15,6 +15,21 @@ vim.opt.hlsearch = false
 vim.opt.incsearch = true
 
 vim.opt.scrolloff = 8
+
+-- WSL has no WSLg/X server, so xclip can't reach the Windows clipboard.
+-- win32yank.exe bridges the unnamedplus register to the real Windows clipboard.
+vim.g.clipboard = {
+	name = "win32yank",
+	copy = {
+		["+"] = "win32yank.exe -i --crlf",
+		["*"] = "win32yank.exe -i --crlf",
+	},
+	paste = {
+		["+"] = "win32yank.exe -o --lf",
+		["*"] = "win32yank.exe -o --lf",
+	},
+	cache_enabled = 0,
+}
 vim.opt.clipboard = 'unnamedplus'
 
 vim.opt.swapfile = false

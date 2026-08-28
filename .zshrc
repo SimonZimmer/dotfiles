@@ -20,7 +20,6 @@ export EDITOR="$VISUAL"
 
 # Environment Variables
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
-eval "$(/opt/homebrew/bin/brew shellenv)"
 export DEFAULT_USER="$(whoami)"
 
 # Terminal and Coloring
@@ -77,6 +76,10 @@ source ~/.starship_init.zsh
 export PATH="/Users/simonzimmermann/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 export PATH="$HOME/.local/bin:$PATH"
+export GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)"
+
+# Load secrets
+[ -f ~/.secrets ] && source ~/.secrets
 
 # opencode
 export PATH=/Users/simonzimmermann/.opencode/bin:$PATH
@@ -84,4 +87,22 @@ export PATH=/Users/simonzimmermann/.opencode/bin:$PATH
 
 # Added by Antigravity CLI installer
 export PATH="/Users/simonzimmermann/.local/bin:$PATH"
-export PATH="/opt/homebrew/opt/tfenv/bin:$PATH"
+
+# opencode
+export PATH=/home/simonzimmermann/.opencode/bin:$PATH
+eval "$(/bin/brew shellenv)"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH=$PATH:/usr/local/go/bin  # add to .zshrc
+export PATH="/home/simonzimmermann/.terragrunt/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# >>> oh-my-opencode-slim background subagents >>>
+export OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true
+export OPENCODE_ENABLE_EXA=1
+# <<< oh-my-opencode-slim background subagents <<<
