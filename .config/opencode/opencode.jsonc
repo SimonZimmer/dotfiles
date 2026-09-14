@@ -22,7 +22,7 @@
     "nvim-maintainer": {
       "description": "Adjusts nvim config",
       "mode": "subagent",
-      "model": "anthropic/claude-sonnet-4-20250514",
+      "model": "github-copilot/claude-sonnet-5",
       "prompt": "You are a neovim maintainer. Focus on editing the custom nvim config located at ~/.config/nvim.",
       "tools": {
         "write": true,
@@ -58,6 +58,11 @@
     "openai": {}
   },
   "mcp": {
+    "atlassian": {
+      "type": "remote",
+      "url": "https://mcp.atlassian.com/v1/mcp/authv2",
+      "enabled": true
+    },
     "github": {
       "type": "local",
       "command": [
@@ -68,20 +73,6 @@
       "enabled": true,
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
-      }
-    },
-    "jira": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "jira-mcp"
-      ],
-      "enabled": true,
-      "env": {
-        "JIRA_INSTANCE_URL": "{env:JIRA_INSTANCE_URL}",
-        "JIRA_USER_EMAIL": "{env:JIRA_USER_EMAIL}",
-        "JIRA_API_KEY": "{env:JIRA_API_KEY}"
       }
     },
     "context7": {
@@ -99,6 +90,76 @@
         "npx",
         "-y",
         "terraform-mcp-server"
+      ],
+      "enabled": true
+    },
+    "azure": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@azure/mcp@3.0.0-beta.42",
+        "server",
+        "start",
+        "--mode",
+        "namespace",
+        "--read-only",
+        "--namespace", "acr",
+        "--namespace", "adme",
+        "--namespace", "advisor",
+        "--namespace", "aks",
+        "--namespace", "appconfig",
+        "--namespace", "applens",
+        "--namespace", "applicationinsights",
+        "--namespace", "appservice",
+        "--namespace", "azureterraform",
+        "--namespace", "azureterraformbestpractices",
+        "--namespace", "bicepschema",
+        "--namespace", "cloudarchitect",
+        "--namespace", "communication",
+        "--namespace", "compute",
+        "--namespace", "containerapps",
+        "--namespace", "cosmos",
+        "--namespace", "datadog",
+        "--namespace", "deploy",
+        "--namespace", "deviceregistry",
+        "--namespace", "eventgrid",
+        "--namespace", "eventhubs",
+        "--namespace", "extension",
+        "--namespace", "fileshares",
+        "--namespace", "foundryextensions",
+        "--namespace", "functionapp",
+        "--namespace", "functions",
+        "--namespace", "get",
+        "--namespace", "grafana",
+        "--namespace", "group",
+        "--namespace", "insights",
+        "--namespace", "iothub",
+        "--namespace", "keyvault",
+        "--namespace", "kusto",
+        "--namespace", "loadtesting",
+        "--namespace", "marketplace",
+        "--namespace", "monitor",
+        "--namespace", "mysql",
+        "--namespace", "optimization",
+        "--namespace", "policy",
+        "--namespace", "postgres",
+        "--namespace", "pricing",
+        "--namespace", "quota",
+        "--namespace", "redis",
+        "--namespace", "resourcehealth",
+        "--namespace", "role",
+        "--namespace", "search",
+        "--namespace", "servicebus",
+        "--namespace", "servicefabric",
+        "--namespace", "signalr",
+        "--namespace", "speech",
+        "--namespace", "sql",
+        "--namespace", "storage",
+        "--namespace", "subscription",
+        "--namespace", "virtualdesktop",
+        "--namespace", "wellarchitectedframework",
+        "--namespace", "workbooks"
       ],
       "enabled": true
     }
