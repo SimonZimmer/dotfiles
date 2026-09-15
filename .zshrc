@@ -20,6 +20,7 @@ export EDITOR="$VISUAL"
 
 # Environment Variables
 export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+export PATH="/Applications/WezTerm.app/Contents/MacOS:$PATH"
 export DEFAULT_USER="$(whoami)"
 
 # Terminal and Coloring
@@ -88,11 +89,7 @@ export PATH=/Users/simonzimmermann/.opencode/bin:$PATH
 # Added by Antigravity CLI installer
 export PATH="/Users/simonzimmermann/.local/bin:$PATH"
 
-# opencode
-export PATH=/home/simonzimmermann/.opencode/bin:$PATH
-eval "$(/bin/brew shellenv)"
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv zsh)"
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
