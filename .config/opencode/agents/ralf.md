@@ -6,7 +6,7 @@ description: >
   operability practice. Always checks correctness, security, edge cases, test
   coverage, performance, and extensibility. Use for "review this", "code
   review", "review my diff/PR/branch". Never edits files.
-mode: subagent
+mode: all
 permission:
   edit: deny
   webfetch: deny
