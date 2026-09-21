@@ -113,6 +113,17 @@ opencode() {
   command opencode "$@"
 }
 
+# jiratui reads JIRA_API_* from env, but its config.yaml outranks env: keep the token out of that file
+jiratui() {
+  [[ -n $JIRA_API_KEY ]] || load_secrets
+  if [[ -n $JIRA_API_KEY ]]; then
+    JIRA_API_USERNAME=$JIRA_USER_EMAIL JIRA_API_TOKEN=$JIRA_API_KEY JIRA_API_BASE_URL=$JIRA_INSTANCE_URL \
+      command jiratui "$@"
+  else
+    command jiratui "$@"
+  fi
+}
+
 # opencode
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
 
@@ -131,9 +142,3 @@ export NVM_DIR="$HOME/.nvm"
 
 [[ -d "/usr/local/go/bin" ]] && export PATH="$PATH:/usr/local/go/bin"
 [[ -d "$HOME/.terragrunt/bin" ]] && export PATH="$HOME/.terragrunt/bin:$PATH"
-
-# >>> oh-my-opencode-slim background subagents >>>
-export OPENCODE_EXPERIMENTAL_BACKGROUND_SUBAGENTS=true
-export OPENCODE_ENABLE_EXA=1
-# <<< oh-my-opencode-slim background subagents <<<
-

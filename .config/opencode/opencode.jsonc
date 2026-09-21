@@ -28,19 +28,12 @@
         "write": true,
         "edit": false
       }
-    },
-    "explore": {
-      "disable": true
-    },
-    "general": {
-      "disable": true
     }
   },
   "plugin": [
     "./plugins/graphify-context/plugin.js",
     "./plugins/caveman/plugin.js",
-    "@slkiser/opencode-quota@latest",
-    "oh-my-opencode-slim"
+    "@slkiser/opencode-quota@latest"
   ],
   "provider": {
     "ollama": {
@@ -54,13 +47,19 @@
         }
       }
     },
-    "copilot": {},
-    "openai": {}
+    // Detected copilot authentication; opencode-quota added this global provider declaration.
+    "copilot": {}
   },
   "mcp": {
     "atlassian": {
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/mcp/authv2",
+      "enabled": true
+    },
+    "datadog": {
+      "type": "remote",
+      "url": "https://mcp.datadoghq.eu/api/unstable/mcp-server/mcp?referrer_ide=opencode-plugin&plugin_version=0.7.13",
+      "oauth": {},
       "enabled": true
     },
     "github": {

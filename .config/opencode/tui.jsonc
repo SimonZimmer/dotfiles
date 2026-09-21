@@ -95,7 +95,6 @@
     "display_thinking": "none"
   },
   "plugin": [
-    "@slkiser/opencode-quota@latest",
-    "oh-my-opencode-slim"
+    "@slkiser/opencode-quota@latest"
   ]
 }
