@@ -92,8 +92,26 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 export GITHUB_PERSONAL_ACCESS_TOKEN="$(gh auth token 2>/dev/null)"
 
-# Load secrets
-[ -f ~/.secrets ] && source ~/.secrets
+# Secrets: op:// refs live in a tracked template, values come from 1Password on demand.
+# Machines without 1Password skip this silently.
+load_secrets() {
+  local tpl="${XDG_CONFIG_HOME:-$HOME/.config}/secrets/secrets.env.tpl" line key value
+  command -v op >/dev/null || return 0
+  [[ -r $tpl ]] || return 0
+  while IFS= read -r line; do
+    [[ -z $line || $line == \#* ]] && continue
+    key=${line%%=*}
+    value=$(op read "${line#*=}") || { print -u2 "load_secrets: failed to read $key"; return 1; }
+    export "$key=$value"
+  done < "$tpl"
+}
+
+# Tools that need the secrets load them lazily (one biometric prompt, not one per terminal).
+# A failed or skipped load never blocks the tool itself.
+opencode() {
+  [[ -n $JIRA_API_KEY ]] || load_secrets
+  command opencode "$@"
+}
 
 # opencode
 [[ -d "$HOME/.opencode/bin" ]] && export PATH="$HOME/.opencode/bin:$PATH"
